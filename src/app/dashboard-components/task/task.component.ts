@@ -172,7 +172,7 @@ export class TaskComponent implements OnInit {
               studentId: url.studentId,
               displayName: url.displayName,
               section: url.section,
-              url: url.attachmentPaths,
+              url: url.submissionLink,
             };
           });
       });
@@ -369,8 +369,8 @@ export class TaskComponent implements OnInit {
         pushToken: element.pushToken,
         section: element.section,
         status: 'Accomplished',
-        submissionLink: element?.attachmentPaths,
-        attachmentPaths: element?.attachmentPaths,
+        submissionLink: element?.submissionLink,
+        attachmentPaths: element?.submissionLink,
         taskId: element.taskId,
         title: element.title,
         uid: element.uid,

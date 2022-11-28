@@ -155,7 +155,7 @@ export class TaskService {
       recipient.attemptsLeft = 2;
       recipient.deadlineLimit = 7;
       recipient.submittedAt = '';
-      recipient.createdAt = new Date();
+      recipient.createdAt = new Date().getTime();
       console.log(recipient);
     });
     let task = {
@@ -164,7 +164,7 @@ export class TaskService {
       description: description,
       scope: scope,
       status: 'Pending',
-      createdAt: new Date(),
+      createdAt: new Date().getTime(),
       startsAt: +startsAt,
       deadline: +deadline,
       uploadedBy: uploadedBy,
@@ -961,7 +961,7 @@ export class TaskService {
       .doc(regId)
       .set(
         {
-          acceptedAt: new Date(),
+          acceptedAt: new Date().getTime(),
           acceptedBy: user,
           isAccepted: true,
         },
