@@ -223,18 +223,40 @@
             </div>
             <div class="modal-form-container">
               <div class="modal-form">
+                 <div class="mb-4">
+                  <label for="firstName"> First Name </label>
+                  <input id="firstName" type="text" placeholder="Input the student's first name"
+                         formControlName="firstName" autocomplete="on" />
+                  <!--
+                <p class="error-msg">Please enter your comment for this task</p> -->
+                </div>
+                 <div class="login-form-error" *ngIf="
+                    createStudentForm.controls.firstName.errors?.required &&
+                    createStudentForm.controls.firstName.touched
+                  ">
+                  Student's first name is required.
+                </div>
+                 <div class="mb-4">
+                  <label for="lastName"> Last Name </label>
+                  <input id="lastName" type="text" placeholder="Input the student's last name"
+                         formControlName="lastName" autocomplete="on" />
+                  <!--
+                <p class="error-msg">Please enter your comment for this task</p> -->
+                </div>
+                <!--
                 <div class="mb-4">
                   <label for="displayName"> Full Name </label>
                   <input id="displayName" type="text" placeholder="Input the student's full name"
                          formControlName="displayName" autocomplete="on" />
-                  <!--
-                <p class="error-msg">Please enter your comment for this task</p> -->
+                 
+                <p class="error-msg">Please enter your comment for this task</p>
                 </div>
+                -->
                 <div class="login-form-error" *ngIf="
-                    createStudentForm.controls.displayName.errors?.required &&
-                    createStudentForm.controls.displayName.touched
+                    createStudentForm.controls.lastName.errors?.required &&
+                    createStudentForm.controls.lastName.touched
                   ">
-                  Student's full name is required.
+                  Student's last name is required.
                 </div>
                 <div class="mb-4">
                   <label for="course"> Course </label>
@@ -676,7 +698,7 @@
 
 
 
-                      <label for="displayName"> Full Name </label>
+                      <label for="firstName"> First Name </label>
                       <div class="ml-auto cursor-pointer" *ngIf="i != 0" (click)="removeStudent(i)">
                         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24" width="24px" height="24px">
                           <g id="surface185298867">
@@ -685,16 +707,31 @@
                         </svg>
                       </div>
                     </div>
-                    <input id="displayName" type="text" placeholder="Input the student's full name"
-                           formControlName="displayName" autocomplete="on" />
+                    <input id="firstName" type="text" placeholder="Input the student's first name"
+                           formControlName="firstName" autocomplete="on" />
                     <!--
                   <p class="error-msg">Please enter your comment for this task</p> -->
                   </div>
                   <div class="login-form-error" *ngIf="
-                   studentControls(i)?.controls?.displayName?.errors?.required &&
-                     studentControls(i)?.controls?.displayName?.touched
+                   studentControls(i)?.controls?.firstName?.errors?.required &&
+                     studentControls(i)?.controls?.firstName?.touched
                   ">
-                    Student's full name is required.
+                    Student's first name is required.
+                  </div>
+
+                  <div class="mb-4">
+                 
+                    <label for="lastName"> Last Name </label>
+                    <input id="lastName" type="text" placeholder="Input the student's last name"
+                           formControlName="lastName" autocomplete="on" />
+                    <!--
+                  <p class="error-msg">Please enter your comment for this task</p> -->
+                  </div>
+                  <div class="login-form-error" *ngIf="
+                   studentControls(i)?.controls?.lastName?.errors?.required &&
+                     studentControls(i)?.controls?.lastName?.touched
+                  ">
+                    Student's last name is required.
                   </div>
                   <div class="mb-4">
                     <label for="course"> Course </label>

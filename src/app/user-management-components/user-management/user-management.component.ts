@@ -218,7 +218,8 @@ export class UserManagementComponent implements OnInit {
 
   newStudent(): FormGroup {
     return this.fb.group({
-      displayName: ['', Validators.required],
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
       section: ['', Validators.required],
       course: ['', Validators.required],
       contactNumber: [''],
@@ -250,18 +251,15 @@ export class UserManagementComponent implements OnInit {
     } else if (this.importForm.invalid) {
       this.studentInputs().controls.forEach((studentControl) => {
         let target = studentControl as FormGroup;
-        target.controls['displayName'].markAsTouched();
+        target.controls['firstName'].markAsTouched();
+        target.controls['lastName'].markAsTouched();
         target.controls['course'].markAsTouched();
         target.controls['section'].markAsTouched();
         target.controls['contactNumber'].markAsTouched();
         target.controls['email'].markAsTouched();
       });
 
-      this.createStudentForm.controls['displayName'].markAsTouched();
-      this.createStudentForm.controls['course'].markAsTouched();
-      this.createStudentForm.controls['section'].markAsTouched();
-      this.createStudentForm.controls['contactNumber'].markAsTouched();
-      this.createStudentForm.controls['email'].markAsTouched();
+     
       this.toastService.publish(
         'Please fill up all required fields properly',
         'formError'
@@ -330,7 +328,8 @@ export class UserManagementComponent implements OnInit {
 
     // Validators.pattern('^[a-z0-9._%+-]+@[(ust.edu)]+\\.ph$'
     this.createStudentForm = this.fb.group({
-      displayName: ['', Validators.required],
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
       section: ['', Validators.required],
       course: ['', Validators.required],
       contactNumber: [''],
@@ -405,9 +404,13 @@ export class UserManagementComponent implements OnInit {
 
   public createStudent() {
     if (this.createStudentForm.valid) {
+
+      const displayName = this.createStudentForm.controls['firstName'].value + " " + this.createStudentForm.controls['lastName'].value;
       this.userService
         .adminCreateStudent(
-          this.createStudentForm.controls['displayName'].value,
+          this.createStudentForm.controls['firstName'].value,
+          this.createStudentForm.controls['lastName'].value,
+          displayName,
           this.createStudentForm.controls['section'].value,
           this.createStudentForm.controls['course'].value,
           this.createStudentForm.controls['contactNumber'].value,
@@ -417,7 +420,8 @@ export class UserManagementComponent implements OnInit {
         .finally(() => this.createStudentForm.reset());
     } else if (this.createStudentForm.invalid) {
       console.log(this.createStudentForm.value);
-      this.createStudentForm.controls['displayName'].markAsTouched();
+      this.createStudentForm.controls['firstName'].markAsTouched(),
+      this.createStudentForm.controls['lastName'].markAsTouched(),
       this.createStudentForm.controls['course'].markAsTouched();
       this.createStudentForm.controls['section'].markAsTouched();
       this.createStudentForm.controls['contactNumber'].markAsTouched();

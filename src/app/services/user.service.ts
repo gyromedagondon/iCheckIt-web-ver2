@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireFunctions } from '@angular/fire/functions';
 import { forkJoin, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { first, map } from 'rxjs/operators';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ToastService } from './toast.service';
@@ -172,6 +172,8 @@ export class UserService {
   //https://us-central1-icheckit-6a8bb.cloudfunctions.net/adminCreateStudent
 
   adminCreateStudent(
+    firstName: string,
+    lastName: string,
     displayName: string,
     section: string,
     course: string,
@@ -203,15 +205,17 @@ export class UserService {
           const uid = cred.userRecord.uid;
           const data = {
             uid: uid,
-            contactNumber: contactNumber.toString(),
+            firstName: firstName.toString(),
+            lastName: lastName.toString(),
+            contactNumber: `0${contactNumber.toString()}`,
             email: email,
             section: section,
-            verified: 'Enrolled',
+            createdUsing: 'webapp',
             isVerified: true,
             pushToken: '',
             course: course,
             displayName: displayName,
-            createdAt: Date.now(),
+            createdAt: new Date().getTime(),
             role: 'Student',
           };
           this.afs
@@ -269,15 +273,17 @@ export class UserService {
 
               const data = {
                 uid: student?.uid,
-                contactNumber: users[idx].contactNumber.toString(),
+                firstName: users[idx].firstName.toString(),
+                lastName: users[idx].lastName.toString(),
+                contactNumber: `0${users[idx].contactNumber.toString()}`,
                 email: users[idx]?.email,
                 section: users[idx]?.section,
-                verified: 'Enrolled',
+                createdUsing: 'webapp',
                 isVerified: true,
                 pushToken: '',
                 course: users[idx]?.course,
-                displayName: users[idx]?.displayName,
-                createdAt: Date.now(),
+                displayName: users[idx]?.firstName + ' ' + users[idx]?.lastName,
+                createdAt: new Date().getTime(),
                 role: 'Student',
               };
               return this.afs.collection('users').doc(student?.uid).set(data);
@@ -420,8 +426,8 @@ export class UserService {
       .then(() => {
         this.toastService.publish(
           'New admin account with the email ' +
-          email +
-          ' has been successfully created',
+            email +
+            ' has been successfully created',
           'formSuccess'
         );
       })

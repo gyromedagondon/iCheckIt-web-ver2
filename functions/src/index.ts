@@ -54,7 +54,7 @@ exports.adminCreateStudent = functions.https.onRequest((request, response) => {
         .auth()
         .createUser({
           email: email,
-          emailVerified: false,
+          emailVerified: true,
           password: password,
           displayName: displayName,
           disabled: false,
@@ -711,9 +711,9 @@ exports.importUsers = functions.https.onRequest((request, response) => {
             .auth()
             .createUser({
               email: user?.email,
-              emailVerified: false,
+              emailVerified: true,
               password: 'password',
-              displayName: user?.displayName,
+              displayName: user?.firstName + " " + user?.lastName,
               disabled: false,
             })
             .then((userRecord) => {
