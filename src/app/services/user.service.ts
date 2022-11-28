@@ -203,7 +203,7 @@ export class UserService {
           const uid = cred.userRecord.uid;
           const data = {
             uid: uid,
-            contactNumber: contactNumber,
+            contactNumber: contactNumber.toString(),
             email: email,
             section: section,
             verified: 'Enrolled',
@@ -269,7 +269,7 @@ export class UserService {
 
               const data = {
                 uid: student?.uid,
-                contactNumber: users[idx].contactNumber,
+                contactNumber: users[idx].contactNumber.toString(),
                 email: users[idx]?.email,
                 section: users[idx]?.section,
                 verified: 'Enrolled',
@@ -342,7 +342,7 @@ export class UserService {
         const uid = cred.userRecord.uid;
         const data = {
           uid: uid,
-          contactNumber: contactNumber,
+          contactNumber: contactNumber.toString(),
           email: email,
           department: department,
           verified: 'Enrolled',
@@ -403,7 +403,7 @@ export class UserService {
         const uid = cred.userRecord.uid;
         const data = {
           uid: uid,
-          contactNumber: contactNumber,
+          contactNumber: contactNumber.toString(),
           email: email,
           department: department,
           verified: 'Verified',
@@ -497,7 +497,7 @@ export class UserService {
       .update({
         email: email,
         displayName: displayName,
-        contactNumber: contactNumber,
+        contactNumber: contactNumber.toString(),
         course: course,
         section: section,
         //  department: department
@@ -531,7 +531,7 @@ export class UserService {
       .update({
         email: email,
         displayName: displayName,
-        contactNumber: contactNumber,
+        contactNumber: contactNumber.toString(),
         department: department,
 
         //  department: department
