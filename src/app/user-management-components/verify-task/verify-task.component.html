@@ -1,0 +1,110 @@
+<app-navbar></app-navbar>
+<div class="h-screen bg-ust-back bg-cover bg-no-repeat main-container" *ngIf="fsData as user">
+  <!-- MAIN CONTAINER LAGI NYONG LAGYAN NITO -->
+  <div class="bg-cover bg-no-repeat main-title bg-center main-title" *ngIf="taskData as task">
+    <div class="p-6 main-title-text text-white flex">
+      <h1>{{task.term}}</h1>
+    </div>
+    <div class="p-6 text-center text-white">
+      <p class="text-5xl title">iCheckit | College of Information and Computing Sciences </p>
+      <p class="mt-4 text-2xl title-2 uppercase tracking-widest">{{task.title}}</p>
+    </div>
+  </div>
+
+  <div flexbox></div>
+  <div class="sub-container" *ngIf="taskData as task">
+
+    <div class="elements-firstrow-container">
+      <div class="transition duration-500 ease-in-out hover:scale-110 shadow-md  taskDescrip-container-middle">
+        <div class="taskDescrip-container-left-main">
+          <h1 class="my-4 text-Black">Task Description:</h1>
+          <h2 class="mr-4 mb-4 text-Black">{{ task.description }}</h2>
+        </div>
+      </div>
+      <div class="transition duration-500 ease-in-out hover:scale-110 shadow-md  taskScope-container-right">
+        <div class="taskScope-container-right-main">
+          <h1 class="my-4 text-Black">Task Scope:</h1>
+          <!-- <h1 class="mr-4 my-4 text-Black">{{ task.scope }}</h1> -->
+          <span class="inline-flex items-center justify-center text-xs font-bold leading-none">
+            <span class="text-indigo-100 bg-indigo-700 px-2 py-1 mr-1 rounded">Non Verified Users</span>
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="elements-secondrow-container">
+      <div class="transition duration-500 ease-in-out hover:scale-110 shadow-md  uploadedBy-container-left">
+        <div class="uploadedBy-container-left-main">
+          <h1 class="text-xl mt-4 text-white">Uploaded by:</h1>
+          <h1 class="text-xl mr-4 my-4 text-white">{{ task.uploadedBy }}</h1>
+        </div>
+      </div>
+      <div class="transition duration-500 ease-in-out hover:scale-110 shadow-md  taskDeadline-container-mid">
+        <div class="taskDeadline-container-mid-main">
+          <h1 class="text-xl mt-4 text-white">Date Created:</h1>
+          <h2 class="text-xl mr-4 my-4 text-white">
+            {{ task.createdAt | date }}
+          </h2>
+        </div>
+      </div>
+      <div class="transition duration-500 ease-in-out hover:scale-110 shadow-md  pending-container-left">
+        <div class="taskDeadline-container-mid-main">
+          <h1 class="text-xl mt-4 text-white">Current Term:</h1>
+          <h2 class="text-xl mr-4 my-4 text-white">
+            {{ task.term }}
+          </h2>
+        </div>
+      </div>
+    </div>
+
+    <div class="students">
+      <input type="text" [(ngModel)]="studentList" name="taskList" class="w-1/4 mb-5 float-right rounded-full input-text" placeholder="&#xf002; Search for a task">
+      <div class="admin-container-header">
+        <h1>Verification:</h1>
+      </div>
+      <div class="mr-10 admin-container-children" *ngFor="
+                let regForm of regForms$
+                | paginate: { itemsPerPage: 10, currentPage: p } | filter: studentList
+            ">
+        <div class="admin-container-children-left">
+          <p>{{regForm.uid}}</p>
+        </div>
+        <div class="admin-container-children-left">
+          <p>Applying for: Student</p>
+        </div>
+        <div class="admin-container-children-left">
+          <p *ngIf="regForm.regFormUrl">Link to registration form here</p>
+          <a href="{{regForm.regFormUrl}}" *ngIf="regForm.regFormUrl">
+            <svg xmlns="http://www.w3.org/2000/svg" class="ml-2 h-6 w-6 text-blue-500" viewBox="0 0 20 20"
+              fill="currentColor">
+              <path
+                d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z" />
+              <path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z" />
+            </svg>
+          </a>
+          <p *ngIf="!regForm.regFormUrl">No Submission Yet</p>
+        </div>
+        <div class="admin-container-children-right">
+          <div class="acceptRejectIcon">
+            <div class="checkIcon" (click)="verifyStudent(regForm)">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"
+                >
+                <path fill-rule="evenodd"
+                  d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                  clip-rule="evenodd" />
+              </svg>
+            </div>
+            <div class="xIcon" (click)="deleteSubmission(regForm)">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+      <pagination-controls (pageChange)="p = $event"></pagination-controls>
+    </div>
+
+
+
+  </div>
+</div>

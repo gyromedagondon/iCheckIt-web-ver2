@@ -1,0 +1,160 @@
+<app-navbar></app-navbar> <!-- NAVBAR -->
+<div class="main-container">
+    <div class="main-title">
+        <div class="main-title-text">
+            <h1> User Manual </h1>
+        </div>
+    </div>
+
+    <!-- Task Management -->
+    <div class="mx-5 shadow-md">
+        <div class="mt-5 main-title-text title-1">
+            <h1> Task Management </h1>
+        </div>
+        <div class="tab w-full overflow-hidden border-t">
+            <input class="absolute opacity-0" id="tab-single-one" type="radio" name="tabs2">
+            <label class="block p-5 leading-normal cursor-pointer title-2" for="tab-single-one">How to add a
+                task</label>
+            <div class="tab-content overflow-hidden">
+                <p class="p-5"> In adding a task: </p>
+                <ul class="ml-5 mb-10 list-disc list-inside">
+                    <li> Navigate to the main dashboard. </li>
+                    <li> Click on the add icon located at the bottom-right of the page. </li>
+                    <li> Once a modal or a pop-up has appeared, enter the necessary credentials for the details of the
+                        task that will be added.</li>
+                    <li> If the entered task scope is wrong or needs to be edited, click on the <b> Clear Scope
+                        </b>button and enter the new task scope.</li>
+                    <li> To sucessfully add the task, click on the <b>Add Task</b> button.</li>
+                </ul>
+            </div>
+        </div>
+        <div class="tab w-full overflow-hidden border-t">
+            <input class="absolute opacity-0" id="tab-single-two" type="radio" name="tabs2">
+            <label class="block p-5 leading-normal cursor-pointer title-2" for="tab-single-two">How to delete a specific
+                task</label>
+            <div class="tab-content overflow-hidden border-l-2 bg-gray-100 leading-normal">
+                <p class="p-5"> In deleting a task: </p>
+                <ul class="ml-5 mb-10 list-disc list-inside">
+                    <li> Navigate to the main dashboard. </li>
+                    <li> Click on the task that needs to be deleted. </li>
+                    <li> Navigate to the task settings (<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5"
+                            viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd"
+                                d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z"
+                                clip-rule="evenodd" />
+                        </svg>)</li>
+                    <li> Once navigated, click on the trash bin located under the logout button. </li>
+                    <li> A pop-up will appear, stating a warning that the task will be deleted. To fully delete the
+                        chosen task, click on <b>Delete Task.</b></li>
+                </ul>
+            </div>
+        </div>
+        <div class="tab w-full overflow-hidden border-t">
+            <input class="absolute opacity-0" id="tab-single-three" type="radio" name="tabs2">
+            <label class="block p-5 leading-normal cursor-pointer title-2" for="tab-single-three">How to edit the
+                details of a specific task</label>
+            <div class="tab-content overflow-hidden border-l-2 bg-gray-100 leading-normal">
+                <p class="p-5"> In updating the details of a task: </p>
+                <ul class="ml-5 mb-10 list-disc list-inside">
+                    <li> Navigate to the main dashboard. </li>
+                    <li> Click on the task that needs to be updated. </li>
+                    <li> Navigate to the task settings (<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5"
+                            viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd"
+                                d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z"
+                                clip-rule="evenodd" />
+                        </svg>) </li>
+                    <li> Once navigated, the information about the task will be displayed. </li>
+                    <li> The fields that are editable about the details of the task are as follows: <i>Task Title, Task
+                            Description,</i> and the <i>Task Status.</i></li>
+                    <li> To apply certain changes on these fields, click on the <b>Update Task</b> button.</li>
+                </ul>
+            </div>
+        </div>
+        <div class="tab w-full overflow-hidden border-t">
+            <input class="absolute opacity-0" id="tab-single-four" type="radio" name="tabs2">
+            <label class="block p-5 leading-normal cursor-pointer title-2" for="tab-single-four">How to accept/reject
+                the submission of the students</label>
+            <div class="tab-content overflow-hidden border-l-2 bg-gray-100 leading-normal">
+                <p class="p-5"> Regarding the submission of the students: </p>
+                <ul class="ml-5 mb-10 list-disc list-inside">
+                    <li> Navigate to the main dashboard. </li>
+                    <li> Click on a specific task. </li>
+                    <li> Under the tasks section, all of the students included in the task scope will be displayed, as
+                        well as their status for submission. </li>
+                    <ul class="ml-5 mb-10 list-disc list-inside">
+                        <li> If the students did not submit their proof of completion yet, their status will remain as
+                            <span style="color: yellow;"><b>Pending.</b></span>
+                        </li>
+                        <li> If the students did not submit their proof of completion yet and the deadline is long
+                            overdue, their status will change to <span style="color: red">Late.</span> </li>
+                        <li> If the students did submit their proof of completion, their status will be <span
+                                style="color: orange;"><b>For Approval</b></span> since it is up for the admins to
+                            approve/reject their submission, according to their standards. </li>
+                        <li> If the students did submit their proof of completion and it was accepted by the admins,
+                            their status will be <span style="color: green"><b>Accomplished.</b></span> </li>
+                        <li> If the students did submit their proof of completion but it was rejected by the admins,
+                            their status will go back as <span style="color: yellow;"><b>Pending.</b></span> </li>
+                    </ul>
+                </ul>
+            </div>
+        </div>
+        <div class="tab w-full overflow-hidden border-t">
+            <input class="absolute opacity-0" id="tab-single-five" type="radio" name="tabs2">
+            <label class="block p-5 leading-normal cursor-pointer title-2" for="tab-single-five">How to see the
+                statistical data of a specific task</label>
+            <div class="tab-content overflow-hidden border-l-2 bg-gray-100 leading-normal">
+                <p class="p-5"> Regarding the submission of the students: </p>
+                <ul class="ml-5 mb-10 list-disc list-inside">
+                    <li> Navigate to the main dashboard. </li>
+                    <li> Click on a specific task. </li>
+                    <li> Click on the pie chart icon (<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5"
+                            viewBox="0 0 20 20" fill="currentColor">
+                            <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z" />
+                            <path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z" />
+                        </svg>) to view the data on how many have submitted their proof of completion for that specific
+                        task. </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- User Management  -->
+    <div class="mx-5 shadow-md">
+        <div class="mt-5 main-title-text title-1">
+            <h1> User Management </h1>
+        </div>
+        <div class="tab w-full overflow-hidden border-t">
+            <input class="absolute opacity-0" id="tab-single-six" type="radio" name="tabs2">
+            <label class="block p-5 leading-normal cursor-pointer title-2" for="tab-single-six">How to add a
+                task</label>
+            <div class="tab-content overflow-hidden">
+                <p class="p-5"> In adding a task: </p>
+                <ul class="ml-5 mb-10 list-disc list-inside">
+                    <li> Navigate to the main dashboard. </li>
+                    <li> Click on the add icon located at the bottom-right of the page. </li>
+                    <li> Once a modal or a pop-up has appeared, enter the necessary credentials for the details of the
+                        task that will be added.</li>
+                    <li> If the entered task scope is wrong or needs to be edited, click on the <b> Clear Scope
+                        </b>button and enter the new task scope.</li>
+                    <li> To sucessfully add the task, click on the <b>Add Task</b> button.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- <script>
+        /* Optional Javascript to close the radio button version by clicking it again */
+        var myRadios = document.getElementsByName('tabs2');
+        var setCheck;
+        var x = 0;
+        for (x = 0; x < myRadios.length; x++) {
+            myRadios[x].onclick = function () {
+                if (setCheck != this) {
+                    setCheck = this;
+                } else {
+                    this.checked = false;
+                    setCheck = null;
+                }
+            };
+        }
+    </script> -->

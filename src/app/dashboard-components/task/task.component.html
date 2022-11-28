@@ -1,0 +1,373 @@
+<app-navbar></app-navbar><!-- NAVBAR -->
+<div class="h-full bg-ust-back bg-cover bg-no-repeat main-container" *ngIf="fsData as user">
+  <!-- MAIN CONTAINER LAGI NYONG LAGYAN NITO -->
+  <div class="bg-cover bg-no-repeat main-title bg-center main-title" *ngIf="taskData as task">
+    <div class="p-6 main-title-text text-white flex">
+      <h1>{{term}}</h1>
+      <div class="flex ml-auto">
+
+        <div class="relative flex flex-col items-center justify-center group mr-5 cursor-pointer" (click)="bulkDownloadSubmission()">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd" />
+          </svg>
+          <div class="absolute bottom-0 flex flex-col items-center hidden mb-6 group-hover:flex">
+            <span class="relative z-10 p-2 text-xs leading-none text-white whitespace-no-wrap bg-black shadow-lg">Download All Submissions</span>
+            <div class="w-3 h-3 -mt-2 rotate-45 bg-black"></div>
+          </div>
+        </div>
+
+        <div class="relative flex flex-col items-center justify-center group">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-5" viewBox="0 0 20 20" fill="currentColor"
+               (click)="triggerCloseSubmission()">
+            <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" />
+            <path fill-rule="evenodd"
+                  d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm9.707 5.707a1 1 0 00-1.414-1.414L9 12.586l-1.293-1.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                  clip-rule="evenodd" />
+          </svg>
+          <div class="absolute bottom-0 flex flex-col items-center hidden mb-6 group-hover:flex">
+            <span class="relative z-10 p-2 text-xs leading-none text-white whitespace-no-wrap bg-black shadow-lg">Close all submissions</span>
+            <div class="w-3 h-3 -mt-2 rotate-45 bg-black"></div>
+          </div>
+        </div>
+
+        <div class="relative flex flex-col items-center justify-center group">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-5" viewBox="0 0 20 20" fill="currentColor"
+               [routerLink]="['/task/reports/', task.id]">
+            <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z" />
+            <path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z" />
+          </svg>
+          <div class="absolute bottom-0 flex flex-col items-center hidden mb-6 group-hover:flex">
+            <span class="relative z-10 p-2 text-xs leading-none text-white whitespace-no-wrap bg-black shadow-lg">Task analytics</span>
+            <div class="w-3 h-3 -mt-2 rotate-45 bg-black"></div>
+          </div>
+        </div>
+
+        <div class="relative flex flex-col items-center justify-center group">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor"
+               [routerLink]="['/task/settings/', task.id]">
+            <path fill-rule="evenodd"
+                  d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z"
+                  clip-rule="evenodd" />
+          </svg>
+          <div class="absolute bottom-0 flex flex-col items-center hidden mb-6 group-hover:flex">
+            <span class="relative z-10 p-2 text-xs leading-none text-white whitespace-no-wrap bg-black shadow-lg">Task settings</span>
+            <div class="w-3 h-3 -mt-2 rotate-45 bg-black"></div>
+          </div>
+        </div>
+
+        <div class="relative flex flex-col items-center justify-center group">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+               (click)="triggerDeleteTaskModal()">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+          </svg>
+          <div class="absolute bottom-0 flex flex-col items-center hidden mb-6 group-hover:flex">
+            <span class="relative z-10 p-2 text-xs leading-none text-white whitespace-no-wrap bg-black shadow-lg">Delete Task</span>
+            <div class="w-3 h-3 -mt-2 rotate-45 bg-black"></div>
+          </div>
+        </div>
+
+        
+
+
+      </div>
+    </div>
+    <div class="p-6 text-center text-white">
+      <p class="text-5xl title">{{task.title}}</p>
+      <p class="mt-4 text-2xl title-2 uppercase tracking-widest">Posted on: {{task.term}}</p>
+    </div>
+  </div>
+  <div flexbox></div>
+
+
+  <div class="sub-container" *ngIf="taskData as task">
+    <!-- Start Coding here -->
+    <!-- Task description -->
+    <div class="elements-firstrow-container">
+      <div class="transition duration-500 ease-in-out hover:scale-110 taskDescrip-container-middle">
+        <div class="taskDescrip-container-left-main">
+          <h1 class="my-4 text-Black">Task Description:</h1>
+          <h2 class="mr-4 mb-4 text-Black">{{ task.description }}</h2>
+        </div>
+      </div>
+
+      <!-- Task scope layout -->
+      <div class="transition duration-500 ease-in-out hover:scale-110  taskScope-container-right">
+        <div class="my-4 mx-full taskScope-container-right-main">
+          <h1 class="mb-3 text-Black">Task Scope:</h1>
+          <!-- <h1 class="mr-4 my-4 text-Black">{{ task.scope }}</h1> -->
+          <span class="inline-flex items-center justify-center text-xs font-bold leading-none"
+                *ngFor="let item of task.scope">
+            <span *ngIf="item.slice(1, 3) == 'IT'"
+                  class="text-indigo-100 bg-indigo-700 px-2 py-1 mr-1 rounded">{{item}}</span>
+            <span *ngIf="item.slice(1, 3) == 'IS'"
+                  class="text-green-100 bg-green-700 px-2 py-1 mr-1 rounded">{{item}}</span>
+            <span *ngIf="item.slice(1, 3) == 'CS'"
+                  class="text-red-100 bg-red-700 px-2 py-1 mr-1 rounded">{{item}}</span>
+          </span>
+        </div>
+      </div>
+    </div>
+    <!-- pending submission layout -->
+    <div class="elements-secondrow-container">
+      <div class="transition duration-500 ease-in-out hover:scale-110 uploadedBy-container-left">
+        <div class="uploadedBy-container-left-main">
+          <h1 class="text-xl mt-4 text-white">Uploaded by:</h1>
+          <h1 class="text-xl mr-4 my-4 text-white">{{ task.uploadedBy }}</h1>
+        </div>
+      </div>
+      <!-- pending submission layout -->
+      <div class="transition duration-500 ease-in-out hover:scale-110 taskDeadline-container-mid">
+        <div class="taskDeadline-container-mid-main">
+          <h1 class="text-xl mt-4 text-white">Task Deadline:</h1>
+          <h2 class="text-xl mr-4 my-4 text-white">
+            {{ task.deadline | date }}
+          </h2>
+        </div>
+      </div>
+      <div class="transition duration-500 ease-in-out hover:scale-110 taskDeadline-container-mid">
+        <div class="taskDeadline-container-mid-main">
+          <h1 class="text-xl mt-4 text-white">Task Creation:</h1>
+          <h2 class="text-xl mr-4 my-4 text-white">
+            {{ task.createdAt | date }}
+          </h2>
+        </div>
+      </div>
+
+      <div class="transition duration-500 ease-in-out hover:scale-110 pending-container-left"
+           *ngIf="task.status == 'Pending'">
+        <div class="piechart-container-right-main">
+          <h1 class="text-xl mt-4 text-black" *ngIf="task.status == 'Pending'">
+            Task Status:
+          </h1>
+          <h2 class="text-xl mt-4 text-black" *ngIf="task.status == 'Pending'">
+            {{ task.status }}
+          </h2>
+        </div>
+      </div>
+      <div class="transition duration-500 ease-in-out hover:scale-110 approved-container-right"
+           *ngIf="task.status == 'Completed'">
+        <div class="piechart-container-right-main">
+          <h1 class="text-xl mt-4 text-white" *ngIf="task.status == 'Completed'">
+            Task Status:
+          </h1>
+          <h2 class="text-xl mt-4 text-white" *ngIf="task.status == 'Completed'">
+            {{ task.status }}
+          </h2>
+        </div>
+      </div>
+    </div>
+    <!-- Late submission layout -->
+
+    <!-- student tracker container -->
+    <div class="students">
+      <input type="text" [(ngModel)]="studentTaskList" name="studentTaskList"
+             class="w-1/4 mb-5 float-right rounded-full input-text" placeholder="&#xf002; Search for a student">
+      <div class="admin-container-header">
+        <h1>Students:</h1>
+        <div class="acceptReject-Label">
+          <h1>Accept / Reject</h1>
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 approveAll-icon" viewBox="0 0 20 20"
+               fill="currentColor">
+            <path fill-rule="evenodd"
+                  d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                  clip-rule="evenodd" (click)="triggerAcceptAllSubmissionModal()" />
+          </svg>
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 rejectAll-icon" viewBox="0 0 20 20"
+               fill="currentColor">
+            <path fill-rule="evenodd"
+                  d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                  clip-rule="evenodd" (click)="triggerRejectAllSubmissionModal()" />
+          </svg>
+        </div>
+      </div>
+    </div>
+    <!--Container for student submissions list-->
+    <div class="mr-10 admin-container-children" *ngFor="
+        let recipient of taskData.recipients
+          | paginate: { itemsPerPage: 100, currentPage: p } | filter: studentTaskList
+      " [routerLink]="['/task/', task.id]">
+      <div class="admin-container-children-left">
+        <p>{{ recipient.displayName }}</p>
+      </div>
+      <div class="admin-container-children-left">
+        <p>{{ recipient.section }}</p>
+      </div>
+      <div class="admin-container-children-left">
+        <p *ngIf="recipient.submittedAt != ''" class="text-blue-500">{{recipient.submittedAt | date}}</p>
+        <a href="{{ recipient.attachmentPaths }}" *ngIf="recipient.attachmentPaths" target="_blank">
+          <svg xmlns="http://www.w3.org/2000/svg" class="ml-2 h-6 w-6 text-blue-500" viewBox="0 0 20 20"
+               fill="currentColor">
+            <path d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z" />
+            <path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z" />
+          </svg>
+        </a>
+        <p *ngIf="!recipient.attachmentPaths">No Submission Yet</p>
+      </div>
+      <div class="admin-container-children-right">
+        <div class="forApproval-container">
+          <p *ngIf="recipient.status == 'For Approval'">
+            Status:
+            <span class="recipient-forApproval">{{ recipient.status }}</span>
+          </p>
+        </div>
+        <p *ngIf="recipient.status == 'No Submission'">
+          Status: <span class="recipient-late">{{ recipient.status }}</span>
+        </p>
+        <p *ngIf="recipient.status == 'Pending'">
+          Status: <span class="recipient-pending">{{ recipient.status }}</span>
+        </p>
+        <p *ngIf="recipient.status == 'Accomplished'">
+          Status:
+          <span class="recipient-accomplished">{{ recipient.status }}</span>
+        </p>
+
+        <p *ngIf="recipient.status == 'Accomplished'" class="ml-10" (click)="downloadOne(recipient.attachmentPaths)">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd" />
+          </svg>
+        </p>
+
+
+        <div class="acceptRejectIcon">
+          <div class="checkIcon" *ngIf="recipient.status == 'For Approval'">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"
+                 (click)="acceptSubmission(recipient)">
+              <path fill-rule="evenodd"
+                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                    clip-rule="evenodd" />
+            </svg>
+          </div>
+          <div class="xIcon" *ngIf="recipient.status == 'For Approval'">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"
+                 (click)="rejectSubmission(recipient)">
+              <path fill-rule="evenodd"
+                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                    clip-rule="evenodd" />
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--End of Container for student submissions list-->
+    <pagination-controls (pageChange)="p = $event"></pagination-controls>
+  </div>
+</div>
+
+<div class="modal-container" aria-labelledby="modal-title" role="dialog" aria-modal="true" *ngIf="closeSubmission">
+  <div class="modal-center">
+    <div class="modal-overlay" aria-hidden="true"></div>
+    <span class="modal-container-spacing" aria-hidden="true">&#8203;</span>
+    <div class="modal">
+      <div class="modal-bg">
+        <div class="modal-header">
+          <div class="modal-header-icon-delete">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+            </svg>
+          </div>
+          <div class="modal-header-title">
+            <h3 id="modal-title">
+              Close the submission for this task?
+            </h3>
+            <div class="mt-2">
+              <p>
+                Are you sure you want to close all of the submission attempts for this?
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-form-container">
+        <div class="modal-buttons">
+          <button type="submit" class="deleteBtn" (click)="closeAllSubmission()">
+            Close Submissions
+          </button>
+          <button type="button" class="cancelBtn" (click)="triggerCloseSubmission()">
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal for Accept All task submission -->
+<div class="modal-container" aria-labelledby="modal-title" role="dialog" aria-modal="true" *ngIf="acceptAllModal">
+  <div class="modal-center">
+    <div class="modal-overlay" aria-hidden="true"></div>
+    <span class="modal-container-spacing" aria-hidden="true">&#8203;</span>
+    <div class="modal">
+      <form>
+        <div class="modal-bg">
+          <div class="modal-header">
+            <div class="modal-header-icon-delete">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+              </svg>
+            </div>
+            <div class="modal-header-title">
+              <h3 id="modal-title">Accept All</h3>
+              <div class="mt-2">
+                <p>Are You Sure You Want To Accept all this task Submission?</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-buttons">
+          <button type="submit" class="AcceptBtn cursor-pointer hover:opacity-80" (click)="acceptAllSubmissions()">
+            Accept All
+          </button>
+          <button type="button" class="cancelBtn cursor-pointer hover:opacity-80" (click)="triggerAcceptAllSubmissionModal()">
+            Cancel
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- End of Modal for Accept all task submission -->
+
+<!-- Modal for Reject All task submission -->
+<div class="modal-container" aria-labelledby="modal-title" role="dialog" aria-modal="true" *ngIf="rejectAllModal">
+  <div class="modal-center">
+    <div class="modal-overlay" aria-hidden="true"></div>
+    <span class="modal-container-spacing" aria-hidden="true">&#8203;</span>
+    <div class="modal">
+      <form>
+        <div class="modal-bg">
+          <div class="modal-header">
+            <div class="modal-header-icon-delete">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+              </svg>
+            </div>
+            <div class="modal-header-title">
+              <h3 id="modal-title">Reject All</h3>
+              <div class="mt-2">
+                <p>Are You Sure You Want To Reject all this task Submission?</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-buttons">
+          <button type="submit" class="deleteBtn" (click)="rejectAllSubmission()">
+            Reject All
+          </button>
+          <button type="button" class="cancelBtn" (click)="triggerRejectAllSubmissionModal()">
+            Cancel
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- End of reject all modal for task submission -->

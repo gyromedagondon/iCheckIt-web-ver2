@@ -1,0 +1,48 @@
+{"users": [
+{
+  "localId": "FJY0O9fpmkMfN86qJr5NGLjyAHG2",
+  "email": "juancarlos.aquino.iics@ust.edu.ph",
+  "emailVerified": false,
+  "passwordHash": "8X4ChuLL47t9gJan7h19iTiWaf6A7wqOowmXUynSh9BN30PpTMHVVvxBByB3yFubjGpWAHjZvj5xb/kFZIdVvg==",
+  "salt": "Vd693eEDko0bgw==",
+  "displayName": "Test Student ",
+  "createdAt": "1630648284519",
+  "disabled": false,
+  "providerUserInfo": []
+},
+{
+  "localId": "SdSSHcXmvtPha3B6cKADZlFJ27N2",
+  "email": "hpnituda@gmail.com",
+  "emailVerified": false,
+  "passwordHash": "lKtN+m7UtXMJ5GKciNE6HJnt/XTctZ6vxxlk8+Tun7ZL5jZbgZ4U62ZMZm1ruwecO7LIrkprqKaVbrlG+y02Yw==",
+  "salt": "WJCVTetbA5i+9Q==",
+  "displayName": "Eddy Verbruggen",
+  "photoUrl": "http://provider.com/profiles/eddyverbruggen.png",
+  "lastSignedInAt": "1630681577421",
+  "createdAt": "1630679367985",
+  "disabled": false,
+  "providerUserInfo": []
+},
+{
+  "localId": "e8xyuumxaHhec9aQnirsPrIBv7l2",
+  "email": "jcmiguel@gmail.com",
+  "emailVerified": false,
+  "passwordHash": "VcmVj/ji29ybhtHC/jh8O493Ta3wl4zrNE8jlvA4adDbQZl6Y/ilrTuswbMTaIooL19TQltP4PORZrn9RvictA==",
+  "salt": "bzSbRYjKYkDltQ==",
+  "displayName": "Department Head Miguel II",
+  "createdAt": "1630708907713",
+  "disabled": false,
+  "providerUserInfo": []
+},
+{
+  "localId": "kzkKmCjxc0cvIkD3ll282hojAEG3",
+  "email": "jcaquino0945@gmail.com",
+  "emailVerified": false,
+  "passwordHash": "GX9brGf4mlwpGKip/3BORMn7iPdIsq0PJEJ+e3CrSCzdi+BRN84xt7ehnBWvzg+bZj8rgFp4MDEn5ysNVFmXFw==",
+  "salt": "utacpt6vahHzlw==",
+  "displayName": "Miguel Aquino",
+  "photoUrl": " ",
+  "lastSignedInAt": "1630708449752",
+  "createdAt": "1629289717349",
+  "providerUserInfo": []
+}]}

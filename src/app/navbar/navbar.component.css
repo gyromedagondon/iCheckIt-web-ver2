@@ -1,0 +1,77 @@
+.navbar {
+  @apply w-full h-auto p-2 bg-red-700 text-white flex fixed;
+  font-family: "Antonio", sans-serif;
+}
+.navbar-logo {
+  @apply flex justify-start items-center w-1/2;
+}
+.navbar-logout {
+  @apply flex justify-end items-center w-1/2;
+}
+.navbar-logout svg {
+    cursor: pointer;
+}
+.sidebar {
+  /*@apply h-screen w-52 fixed mt-10;*/
+  @apply w-56 fixed mt-10;
+  background-color: white;
+  padding: 10px 10px 10px 3px;
+  border-radius: 15px;
+  height: 550px;
+}
+
+.sidebar-link {
+  @apply text-white bg-red-600 p-3 shadow-lg flex justify-start items-center text-sm;
+  margin-bottom: 1.5px;
+  transition: 0.1s all ease-in-out;
+  font-family: "Abel", sans-serif;
+  border-radius: 10px;
+  padding: 15px;
+}
+
+  .sidebar-link svg {
+    @apply h-4 w-4 mr-2;
+  }
+
+.router-link-active {
+  @apply bg-red-800;
+  
+}
+
+.sidebar-link:hover {
+  @apply bg-red-700;
+  border-left: 8px solid white;
+}
+
+/* .cics {
+  @apply ml-5 flex-col-reverse items-center text-xs;
+  font-family: "Abel", sans-serif;
+  color: white;
+  margin-top: 31rem;
+}
+.cics hr {
+  @apply my-5 text-center;
+} */
+
+.cics {
+  bottom: 50px;
+}
+
+  .cics img {
+    @apply items-center mx-auto;
+    /* margin-top: 23rem; */
+    width: 60px;
+    height: 70px;
+  }
+
+  .cics p {
+    @apply text-white text-center mt-3 text-sm px-4;
+    font-family: "Abel", sans-serif;
+  }
+
+.antonio {
+  font-family: 'Antonio';
+}
+.p {
+  color: #dc2626;
+}

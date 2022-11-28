@@ -1,0 +1,62 @@
+<app-navbar></app-navbar> <!--NAVBAR-->
+<div class="h-full bg-ust-back bg-cover bg-no-repeat main-container" *ngIf="fsData as user">
+  <!--HEADER CONTAINER-->
+  <div class="main-title"
+       *ngIf="taskData as task">
+    <div class="p-6 main-title-text text-white flex">
+      <!-- <h1>{{ term }}</h1> -->
+    </div>
+    <div class="p-6 text-center text-white">
+      <p class="text-5xl title">
+        CICS Term Calendar • {{ term }} {{calendar.yearStart}} - {{calendar.yearEnd}}
+      </p>
+      <p class="mt-4 text-2xl title-2 uppercase tracking-widest">
+        iCheckit | College of Information and Computing Sciences
+
+      </p>
+    </div>
+  </div>
+  <!--END OF HEADER CONTAINER-->
+  <div flexbox></div>
+
+  <div class="flex flex-col justify-center items-center">
+    <div class="flex rounded-md {{!this.calendar.url ? 'border-red-700 border-8' : ''  }}p-4 m-4 min-w-[700px] min-h-[760px] max-w-[700px] max-h-[775px]">
+      <div *ngIf="!this.calendar.url">There is no calendar uploaded yet, please edit to upload a calendar</div>
+      <img class="object-scale-down w-full h-full max-h-[740px] max-w-[700px]" src="{{calendar.url ? calendar.url : ''}}" *ngIf="this.calendar.url" />
+    </div>
+    <button (click)="openEditModal()" class="bg-red-700 text-white mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 text-base font-medium  hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm mb-8" *ngIf="this.fsData.role === 'CICS Office Staff'">Edit Calendar</button>
+  </div>
+
+
+  <!--EDIT CALENDAR MODAL-->
+  <div (click)="closeEditModal()" class="fixed w-[100vw] h-[100vh] top-0 left-0 z-[1] bg-[#81818199] flex justify-center items-center p-6" *ngIf="showEditModal">
+    <div (click)="$event.stopPropagation()" class="rounded-md bg-white flex flex-col p-6 shadow-md">
+      <form [formGroup]="editForm" (ngSubmit)="editCalendarSubmit()" class="flex flex-col">
+        <div class="text-gray-500 title">Edit CICS Term Calendar</div>
+
+        <div class="mr-auto ml-auto flex flex-col gap-4 mb-2">
+          <div class="title ml-auto mr-auto">Academic Year:</div>
+          <div>
+            <input class="max-w-[200px]" placeholder="Start year" name="start" id="start" type="number" formControlName="start" autocomplete="on">
+            -
+            <input placeholder="End year" name="end" id="end" type="number" formControlName="end" autocomplete="on">
+          </div>
+        </div>
+        <input (change)="handleOnChangeFile($event)" type="file" accept="image/png, image/gif, image/jpeg" #file id="file" class="hidden" />
+        <div (click)="openFileDialog()" class="cursor-pointer hover:border-gray-400 title flex rounded-md border-gray-200 border-8  sm:min-w-[300px] sm:min-h-[360px] ">
+          <img class="object-scale-down w-full h-full max-h-[440px] max-w-[400px]" src="{{this.preview ? this.preview : calendar.url}}" />
+          <div *ngIf="!this.calendar.url && !this.preview">Insert calendar image here</div>
+        </div>
+        <div class="flex flex-row ml-auto mt-4">
+          <button (click)="closeEditModal()" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm;">
+            Cancel
+          </button>
+
+          <button type="submit" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-green-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm;">
+            Save
+          </button>
+
+        </div>
+      </form>
+    </div>
+  </div>

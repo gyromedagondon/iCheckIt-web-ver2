@@ -1,0 +1,454 @@
+<app-navbar></app-navbar> <!-- NAVBAR -->
+<div class="h-full bg-ust-back bg-cover bg-no-repeat main-container" *ngIf="fsData as user">
+  <!-- MAIN CONTAINER LAGI NYONG LAGYAN NITO -->
+  <div class="bg-cover bg-no-repeat main-title bg-center main-title">
+    <div class="p-6 main-title-text text-white flex">
+      <h1>{{term}}</h1>
+    </div>
+    <div class="p-6 text-center text-white">
+      <p class="text-5xl title">MyProfile </p>
+      <p class="mt-4 text-2xl title-2 uppercase tracking-widest"> iCheckit | College of Information and Computing Sciences</p>
+    </div>
+  </div>
+
+  <div class="sub-container">
+    <div class="profile-photo-container">
+      <!--profile photo-->
+      <div class="py-5 flex justify-center items-center">
+        <div class="bg-white rounded-full relative left-[140px] bottom-[50px] hover:opacity-70">
+        </div>
+        <img src="{{user.photoUrl ? user.photoUrl : 'https://firebasestorage.googleapis.com/v0/b/icheckit-6a8bb.appspot.com/o/profilepics%2Fuser.png?alt=media&token=86f227a7-b38f-461a-84e1-ee53607f71be'}}" alt="Profile Pic" class="max-h-[150px] max-w-[150px] min-w-[150px] min-h-[150px] rounded-full object-cover">
+        <div class="profile-name-container">
+          <div class="p-6 text-center text-red-700">
+            <b><p class="text-5xl title">{{user.displayName}} </p></b>
+          </div>
+        </div>
+      </div>
+      <!--end of profile photo-->
+
+    </div>
+
+    <div class="profile-container">
+      <div class="profile-container-left">
+        <div class="profile-container-left-header">
+          <h1>My Account Details:</h1>
+        </div>
+        <div class="profile-container-left-main">
+          <div class="profile-details">
+            <p><span class="details-title">Full Name:</span> {{user.displayName}}</p>
+            <p><span class="details-title">Email:</span> {{user.email}}</p>
+            <p><span class="details-title">Contact Number:</span> {{user.contactNumber}}</p>
+            <p><span class="details-title">Account Date Created:</span> {{user.createdAt | date}}</p>
+            <p><span class="details-title">Account Type:</span> {{user.role}} </p>
+          </div>
+        </div>
+      </div>
+      <div class="profile-container-right">
+        <!--<div class="user-actions">-->
+        <div class="profile-container-left-header">
+          <h1>User Actions:</h1>
+        </div>
+        <div class="actions-edit" (click)="triggerEditModal()">
+          <svg xmlns="http://www.w3.org/2000/svg" style="color:white" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+            <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
+          </svg>
+          <p style="color: white">Edit My Profile</p>
+        </div>
+        <div class="actions-edit" (click)="triggerChangeEmailModal()">
+          <svg xmlns="http://www.w3.org/2000/svg" style="color:white" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+               stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207" />
+          </svg>
+          <p style="color: white">Change My Email</p>
+        </div>
+        <div class="actions-edit" (click)="triggerChangePassModal()">
+          <svg xmlns="http://www.w3.org/2000/svg" style="color:white" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd"
+                  d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z"
+                  clip-rule="evenodd" />
+          </svg>
+          <p style="color: white">Change My Password</p>
+        </div>
+        <div class="actions-delete" (click)="triggerDeleteModal()">
+          <svg xmlns="http://www.w3.org/2000/svg" style="color:white" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+               stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+          </svg>
+          <p style="color: white">Delete My Profile</p>
+        </div>
+        <!--</div>-->
+      </div>
+    </div>
+  </div>
+
+
+  <!-- MODAL CONTAINER FOR EDIT MY PROFILE -->
+  <div class="modal-container" aria-labelledby="modal-title" role="dialog" aria-modal="true" *ngIf="editModal">
+    <div class="modal-center">
+      <div class="modal-overlay" aria-hidden="true"></div>
+      <span class="modal-container-spacing" aria-hidden="true">&#8203;</span>
+      <div class="modal  w-[500px]">
+        <form [formGroup]="editAccountForm" (ngSubmit)="editMyProfile()">
+          <div class="modal-bg">
+            <div class="modal-header">
+              <div class="modal-header-icon-edit">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                  <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
+                </svg>
+              </div>
+              <div class="modal-header-title">
+                <h3 id="modal-title">
+                  Edit My Profile
+                </h3>
+                <div class="mt-2">
+                  <p>
+                    Edit Your Account Information
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="modal-form-container">
+            <div class="modal-form">
+
+              <div class="flex flex-row">
+                <div class="flex flex-col">
+                  <div class="mb-4">
+                    <label for="displayName">
+                      Full Name
+                    </label>
+                    <input id="displayName" type="text" placeholder="Input your full name" formControlName="displayName"
+                           autocomplete="on">
+                    <!--
+                    <p class="error-msg">Please enter your comment for this task</p> -->
+                  </div>
+                  <div class="login-form-error"
+                       *ngIf="editAccountForm.controls.displayName.errors?.required && editAccountForm.controls.displayName.touched">
+                    Full name is required.
+                  </div>
+                  <div class="mb-4">
+                    <label for="contactNumber">
+                      Contact Number
+                    </label>
+                    <input id="contactNumber" type="text" placeholder="Input your contact number"
+                           formControlName="contactNumber" autocomplete="on">
+                    <!--
+                    <p class="error-msg">Please enter your comment for this task</p> -->
+                  </div>
+
+                  <div class="mb-4">
+                    <label for="FileSelectInputDialog">
+                      Profile Picture:
+                    </label>
+                    <input class="border border-black" type="file" accept="image/png, image/gif, image/jpeg" (change)="handleOnChangeFile($event)" formControlName="FileSelectInputDialog" id="FileSelectInputDialog" />
+                  </div>
+
+                  <div class="mb-4">
+                    <label for="password">
+                      Input Your Password
+                    </label>
+                    <input id="password" type="password" formControlName="password" autocomplete="on">
+                    <!--
+                    <p class="error-msg">Please enter your comment for this task</p> -->
+                  </div>
+                  <div class="login-form-error"
+                       *ngIf="editAccountForm.controls.password.errors?.required && editAccountForm.controls.password.touched">
+                    Password is required.
+                  </div>
+                </div>
+                <div class="ml-auto mr-auto">
+                  <div class="font-bold text-[0.9rem] ">Profile Picture Preview:</div>
+                  <div class="flex justify-center items-center">
+                    <div class="bg-white rounded-full relative left-[140px] bottom-[50px] hover:opacity-70">
+                      <!--
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 cursor-pointer" viewBox="0 0 20 20" fill="currentColor">
+                             <path
+                               d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
+                           </svg>
+                           -->
+                    </div>
+                    <img src="{{this.preview ? this.preview : user.photoUrl ? user.photoUrl : 'https://firebasestorage.googleapis.com/v0/b/icheckit-6a8bb.appspot.com/o/profilepics%2Fuser.png?alt=media&token=86f227a7-b38f-461a-84e1-ee53607f71be'}}" alt="Profile Pic" class="mt-10 max-h-[180px] max-w-[158px] min-w-[180px] min-h-[180px] rounded-full object-cover">
+
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <div class="modal-buttons">
+            <button type="submit" class="addBtn" *ngIf="editAccountForm.valid">
+              Edit Profile
+            </button>
+            <button type="submit" class="addBtn-disabled" *ngIf="editAccountForm.invalid">
+              Edit Profile
+            </button>
+            <button type="button" class="cancelBtn" (click)="triggerEditModal()">
+              Cancel
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <!-- end modal container for edit -->
+  <!-- modal container for edit email-->
+  <div class="modal-container" aria-labelledby="modal-title" role="dialog" aria-modal="true" *ngIf="editEmailModal">
+    <div class="modal-center">
+      <div class="modal-overlay" aria-hidden="true"></div>
+      <span class="modal-container-spacing" aria-hidden="true">&#8203;</span>
+      <div class="modal">
+        <form [formGroup]="updateEmailForm" (ngSubmit)="editMyEmail()">
+          <div class="modal-bg">
+            <div class="modal-header">
+              <div class="modal-header-icon-edit">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                  <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
+                </svg>
+              </div>
+              <div class="modal-header-title">
+                <h3 id="modal-title">
+                  Change My Account Email
+                </h3>
+                <div class="mt-2">
+                  <p>
+                    Change the email account for your profile by inputting your current and new email.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-form-container">
+            <div class="modal-form">
+              <div class="mb-4">
+                <label for="currentEmail">
+                  Input Your Current Email
+                </label>
+                <input id="currentEmail" type="text" placeholder="Input your current email"
+                       formControlName="currentEmail" autocomplete="on">
+              </div>
+              <div class="login-form-error"
+                   *ngIf="updateEmailForm.controls.currentEmail.errors?.required && updateEmailForm.controls.currentEmail.touched">
+                Current Email is required.
+              </div>
+              <div class="login-form-error" *ngIf="updateEmailForm.controls.currentEmail.errors?.email">
+                Not a valid email.
+              </div>
+              <div class="login-form-error" *ngIf="updateEmailForm.controls.currentEmail.errors?.pattern">
+                Please use a UST account email
+              </div>
+              <div class="mb-4">
+                <label for="newEmail">
+                  Input Your New Email
+                </label>
+                <input id="newEmail" type="text" placeholder="Input your new email" formControlName="newEmail"
+                       autocomplete="on">
+              </div>
+              <div class="login-form-error"
+                   *ngIf="updateEmailForm.controls.newEmail.errors?.required && updateEmailForm.controls.newEmail.touched">
+                New Email is required.
+              </div>
+              <div class="login-form-error" *ngIf="updateEmailForm.controls.newEmail.errors?.email">
+                Not a valid email.
+              </div>
+              <div class="login-form-error" *ngIf="updateEmailForm.controls.newEmail.errors?.pattern">
+                Please use a UST account email
+              </div>
+              <div class="mb-4">
+                <label for="password">
+                  Input Your Password
+                </label>
+                <input id="password" type="password" formControlName="password" autocomplete="on">
+                <!--
+                <p class="error-msg">Please enter your comment for this task</p> -->
+              </div>
+              <div class="login-form-error"
+                   *ngIf="updateEmailForm.controls.password.errors?.required && updateEmailForm.controls.password.touched">
+                Password is required.
+              </div>
+            </div>
+          </div>
+          <div class="modal-buttons">
+            <button type="submit" class="addBtn" *ngIf="updateEmailForm.valid">
+              Update Email
+            </button>
+            <button type="submit" class="addBtn-disabled" *ngIf="updateEmailForm.invalid">
+              Update Email
+            </button>
+            <button type="button" class="cancelBtn" (click)="triggerChangeEmailModal()">
+              Cancel
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <!-- end modal container for edit -->
+  <!-- modal container for delete -->
+  <div class="modal-container" aria-labelledby="modal-title" role="dialog" aria-modal="true" *ngIf="deleteModal">
+    <div class="modal-center">
+      <div class="modal-overlay" aria-hidden="true"></div>
+      <span class="modal-container-spacing" aria-hidden="true">&#8203;</span>
+      <div class="modal">
+        <form [formGroup]="deleteAccountForm" (ngSubmit)="deleteMyProfile()">
+          <div class="modal-bg">
+            <div class="modal-header">
+              <div class="modal-header-icon-delete">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                     stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                </svg>
+              </div>
+              <div class="modal-header-title">
+                <h3 id="modal-title">
+                  Delete My Account
+                </h3>
+                <div class="mt-2">
+                  <p>
+                    Are You Sure You Want To Delete Your Account And It's Corresponding Data?
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-form-container">
+            <div class="modal-form">
+              <div class="mb-4">
+                <label for="currentEmail">
+                  Input Your Current Email
+                </label>
+                <input id="currentEmail" type="text" placeholder="Input your current email"
+                       formControlName="currentEmail" autocomplete="on">
+              </div>
+              <div class="login-form-error"
+                   *ngIf="deleteAccountForm.controls.currentEmail.errors?.required && deleteAccountForm.controls.currentEmail.touched">
+                Email is required.
+              </div>
+              <div class="login-form-error" *ngIf="deleteAccountForm.controls.currentEmail.errors?.email">
+                Not a valid email.
+              </div>
+              <div class="login-form-error" *ngIf="deleteAccountForm.controls.currentEmail.errors?.pattern">
+                Please use a UST account email
+              </div>
+              <div class="mb-4">
+                <label for="password">
+                  Input Your Password
+                </label>
+                <input id="password" type="password" formControlName="password" autocomplete="on">
+                <!--
+                <p class="error-msg">Please enter your comment for this task</p> -->
+              </div>
+              <div class="login-form-error"
+                   *ngIf="deleteAccountForm.controls.password.errors?.required && deleteAccountForm.controls.password.touched">
+                Password is required.
+              </div>
+            </div>
+            <div class="modal-buttons">
+              <button type="submit" class="deleteBtn" *ngIf="deleteAccountForm.valid">
+                Delete Account
+              </button>
+              <button type="submit" class="deleteBtn-disabled" *ngIf="deleteAccountForm.invalid">
+                Delete Account
+              </button>
+              <button type="button" class="cancelBtn" (click)="triggerDeleteModal()">
+                Cancel
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <!-- end modal container for delete -->
+  <!-- modal container for edit -->
+  <div class="modal-container" aria-labelledby="modal-title" role="dialog" aria-modal="true" *ngIf="changePassModal">
+    <div class="modal-center">
+      <div class="modal-overlay" aria-hidden="true"></div>
+      <span class="modal-container-spacing" aria-hidden="true">&#8203;</span>
+      <div class="modal">
+        <form [formGroup]="changePassForm" (ngSubmit)="changePassword()">
+          <div class="modal-bg">
+            <div class="modal-header">
+              <div class="modal-header-icon-edit">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd"
+                        d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z"
+                        clip-rule="evenodd" />
+                </svg>
+              </div>
+              <div class="modal-header-title">
+                <h3 id="modal-title">
+                  Change Password
+                </h3>
+                <div class="mt-2">
+                  <p>
+                    Change Your Account Password
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-form-container">
+            <div class="modal-form">
+              <div class="mb-4">
+                <label for="email">
+                  Input Your Email
+                </label>
+                <input id="email" type="text" placeholder="Input your account email" formControlName="email"
+                       autocomplete="on">
+                <!--
+                <p class="error-msg">Please enter your comment for this task</p> -->
+              </div>
+              <div class="login-form-error"
+                   *ngIf="changePassForm.controls.email.errors?.required && changePassForm.controls.email.touched">
+                Email is required.
+              </div>
+              <div class="login-form-error" *ngIf="changePassForm.controls.email.errors?.email">
+                Not a valid email.
+              </div>
+              <div class="mb-4">
+                <label for="oldPassword">
+                  Input Your Current Password
+                </label>
+                <input id="oldPassword" type="password" formControlName="oldPassword" autocomplete="on">
+                <!--
+                <p class="error-msg">Please enter your comment for this task</p> -->
+              </div>
+              <div class="login-form-error"
+                   *ngIf="changePassForm.controls.oldPassword.errors?.required && changePassForm.controls.oldPassword.touched">
+                Password is required.
+              </div>
+              <div class="mb-4">
+                <label for="newPassword">
+                  Input Your New Password
+                </label>
+                <input id="newPassword" type="password" formControlName="newPassword" autocomplete="on">
+                <!--
+                <p class="error-msg">Please enter your comment for this task</p> -->
+              </div>
+              <div class="login-form-error"
+                   *ngIf="changePassForm.controls.newPassword.errors?.required && changePassForm.controls.newPassword.touched">
+                New Password is required.
+              </div>
+            </div>
+          </div>
+          <div class="modal-buttons">
+            <button type="submit" class="addBtn" *ngIf="changePassForm.valid">
+              Change Password
+            </button>
+            <button type="submit" class="addBtn-disabled" *ngIf="changePassForm.invalid">
+              Change Password
+            </button>
+            <button type="button" class="cancelBtn" (click)="triggerChangePassModal()">
+              Cancel
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <!-- end modal container for edit -->

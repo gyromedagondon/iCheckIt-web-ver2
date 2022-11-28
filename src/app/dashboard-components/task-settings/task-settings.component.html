@@ -1,0 +1,204 @@
+<app-navbar></app-navbar> <!-- NAVBAR -->
+<div class="h-full bg-ust-back bg-cover bg-no-repeat main-container" *ngIf="fsData as user">
+  <!-- MAIN CONTAINER LAGI NYONG LAGYAN NITO -->
+  <div class="bg-cover bg-no-repeat main-title bg-center main-title" *ngIf="taskData as task">
+    <div class="p-6 main-title-text text-white flex">
+      <h1>{{term}}</h1>
+      <div class="flex ml-auto">
+        <!-- <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" [routerLink]="['/task/settings/', task.id, ]">
+        <path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd" />
+      </svg> -->
+
+        <div class="flex flex-col justify-center">
+          <button (click)="triggerDeleteTaskModal()" class="bg-red-700 text-white mt-3 w-full inline-flex justify-center rounded-md border border-gray-300
+            shadow-sm px-4 py-2 text-base font-medium  hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500
+            sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm mb-8" *ngIf="this.fsData.role === 'CICS Office Staff' && 'Department Head'">
+            Delete Task
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="p-6 text-center text-white">
+      <p class="text-5xl title">{{task.title}} </p>
+      <p class="mt-4 text-2xl title-2 tracking-widest uppercase">icheckit | college of information and computing sciences</p>
+    </div>
+  </div>
+  <div flexbox>
+
+
+  </div>
+
+  <div class="sub-container" *ngIf="taskData as task">
+
+    <!-- Start Coding here -->
+    <div class="taskSettings-container">
+      <div class="taskSettings-container-bar">
+        <h1 class="text-3xl mt-4"> Task Settings: </h1>
+      </div>
+    </div>
+    <div class="taskComponents-container">
+
+      <!-- FORM GROUP -->
+      <Form [formGroup]="updateTaskForm" (ngSubmit)="updateTask()">
+        <div class="taskSettings-container-layout">
+          <div class="text-main">
+            <!-- Task Title here -->
+            <h2 class="text-2xl mt-4"> Task Title: </h2>
+            <input type="text" id="title" placeholder="{{task.title}}" value="{{task.title}}"
+              class="taskTitle-textfield" formControlName="title" />
+            <div class="login-form-error"
+              *ngIf="updateTaskForm.controls.title.errors?.required && updateTaskForm.controls.title.touched">
+              Task title is required.
+            </div>
+            <!-- Task Description here -->
+            <h2 class="text-2xl mt-4"> Task Description: </h2>
+            <textarea style="width: 100%;" class="mt-3" id="description" placeholder="{{task.description}}"
+              value="{{task.description}}" formControlName="description">{{task.description}}</textarea>
+            <div class="login-form-error"
+              *ngIf="updateTaskForm.controls.description.errors?.required && updateTaskForm.controls.description.touched">
+              Task description is required.
+            </div>
+            <!-- Task Deadline here -->
+            <h2 class="text-2xl mt-4">Task Deadline</h2>
+            <input type="text" placeholder="{{task.deadline | date}}" id="deadline" class="taskScope-textfield"
+              value="{{task.deadline | date}}" readonly />
+            <input type="date" id="deadline" name="deadline" value="{{task.deadline}}" formControlName="deadline">
+            <div class="login-form-error"
+              *ngIf="updateTaskForm.controls.deadline.errors?.required && updateTaskForm.controls.deadline.touched">Task
+              deadline is required
+            </div>
+
+
+          </div>
+          <div class="updateTask-button">
+            <button type="" class="updateTaskBtn" (click)="updateTask()"> Update Task </button>
+          </div>
+          <!-- <div class="updateTask-button">
+                <button type="" class="updateTaskBtn" (click)="triggerUpdateTask()"> Load Data </button>
+              </div> -->
+
+        </div>
+        <!-- <div class="taskSettings-buttons">
+            <button type="" class="addScopeBtn" (click)="triggerAddTaskModal()"> Add Scope </button>
+            <button type="" class="removeScopeBtn"> Remove Scope </button>
+            <button type="" class="clearScopeBtn"> Clear Scope </button>
+          </div> -->
+
+
+      </Form>
+    </div>
+    <!-- update new task scope beginning
+
+          <div class="modal-container" aria-labelledby="modal-title" role="dialog" aria-modal="true" *ngIf="addTaskModal">
+            <div class="modal-center">
+              <div class="modal-overlay" aria-hidden="true"></div>
+              <span class="modal-container-spacing" aria-hidden="true">&#8203;</span>
+              <div class="modal">
+                <form [formGroup]="addTaskForm" (ngSubmit)="updateTaskScope()">
+                <div class="modal-bg">
+                  <div class="modal-header">
+                    <div class="modal-header-icon-create">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
+                          </svg>
+                    </div>
+                    <div class="modal-header-title">
+                      <h3 id="modal-title">
+                        Update Task Scope
+                      </h3>
+                      <div class="mt-2">
+                        <p>
+                          Update the task scope for this assignment
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal-form-container">
+                    <div class="modal-form">
+
+                      <div class="mb-4">
+                        <label for="scope">
+                          Task Scope
+                        </label>
+                        <select name="scope" id="scope" style="width: 100%;" (change)="changeTaskScope($event)" formControlName="scope">
+                          <option value="" disabled>Choose the scope of the task</option>
+                            <option *ngFor="let scope of newTaskScope">{{scope}}</option>
+                          </select>
+
+                        <div *ngIf="taskScopeArray.length > 0">
+                          <p *ngFor="let item of taskScopeArray" style="display: inline-block; margin-right: 4px;">{{item}}</p>
+                        </div>
+                      </div>
+                      <div class="login-form-error" *ngIf="addTaskForm.controls.scope.errors?.required && addTaskForm.controls.scope.touched">Task scope is required.
+                      </div>
+
+
+                    </div>
+                  </div>
+                <div class="modal-buttons">
+                  <button type="submit" class="addBtn" *ngIf="addTaskForm.valid">
+                    Update Task Scope
+                  </button>
+                  <button type="submit" class="addBtn-disabled" *ngIf="addTaskForm.invalid">
+                    Update Task Scope
+                  </button>
+                  <button type="button" class="cancelBtn" (click)="triggerAddTaskModal()">
+                    Cancel
+                  </button>
+                </div>
+                </form>
+              </div>
+            </div>
+          </div> -->
+
+
+    <!-- update new task scope end -->
+
+    <!--Modal container for delete task -->
+    <div class="modal-container" aria-labelledby="modal-title" role="dialog" aria-modal="true" *ngIf="deleteTaskModal">
+      <div class="modal-center">
+        <div class="modal-overlay" aria-hidden="true"></div>
+        <span class="modal-container-spacing" aria-hidden="true">&#8203;</span>
+        <div class="modal">
+          <form [formGroup]="deleteTaskForm">
+            <div class="modal-bg">
+              <div class="modal-header">
+                <div class="modal-header-icon-delete">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                  </svg>
+                </div>
+                <div class="modal-header-title">
+                  <h3 id="modal-title">
+                    Delete Task
+                  </h3>
+                  <div class="mt-2">
+                    <p>
+                      Are You Sure You Want To Delete this task and It's Corresponding Data?
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="modal-buttons">
+              <button type="submit" class="deleteBtn" (click)="deleteTask()">
+                Delete Task
+              </button>
+              <button type="button" class="cancelBtn" (click)="triggerDeleteTaskModal()">
+                Cancel
+              </button>
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- End for delete Task -->

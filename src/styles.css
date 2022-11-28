@@ -1,0 +1,28 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+/* You can add global styles to this file, and also import other style files */
+body {
+  background-color: #EEF1F6;
+}
+
+.main-container {
+    @apply h-full pl-52;
+}
+/*.main-title {
+    @apply w-full h-40 pt-12 text-black;
+    padding: 20px 10px 10px 10px;
+}*/
+.main-title-text {
+    @apply w-full justify-start items-center text-lg;
+    font-family: 'Abel', sans-serif;
+}
+.main-title-date {
+    font-family: 'Abel', sans-serif;
+    
+}
+.sub-container {
+    @apply h-full w-full p-6;
+    border-radius: 20px;
+}
+

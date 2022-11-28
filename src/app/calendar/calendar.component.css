@@ -1,0 +1,61 @@
+.search-bar-class {
+  @apply w-auto h-auto text-black flex flex-row justify-end mb-3;
+  font-family: "Antonio", sans-serif;
+}
+.admin-container-children {
+  @apply flex w-full items-center justify-start shadow-md;
+  transition: 0.15s all ease-in-out;
+  margin-bottom: 1.5px;     
+  font-family: "Antonio", sans-serif;
+  cursor: pointer;
+}
+.admin-container-children-right {
+  @apply w-auto text-right pr-2 flex flex-row justify-end;
+}
+.admin-container-children-left-completed {
+  @apply w-full p-2 flex flex-col h-full items-start;
+  border-left: green 25px solid;
+}
+.admin-container-children:hover {
+  background-color: #dee2e7;
+}
+.input-text {
+  @apply text-black flex flex-row justify-end;
+  font-family: "Abel", "FontAwesome";
+}
+.admin-container-header {
+  @apply h-auto p-3 w-full text-white text-lg flex flex-row justify-start;
+  font-family: "Antonio", sans-serif;
+  background-color: #35414f;
+}
+.admin-container-children {
+  @apply flex w-full items-center justify-start shadow-md;
+  transition: 0.15s all ease-in-out;
+  margin-bottom: 1.5px;
+  font-family: "Antonio", sans-serif;
+  cursor: pointer;
+}
+.admin-container-children-left {
+  @apply w-1/2 flex flex-row h-full pl-2 items-center;
+}
+.admin-container-children-right {
+  @apply w-full text-right  flex flex-row;
+}
+
+/*.main-title {
+  background-blend-mode: soft-light;
+  background-color: #7d1d2d;
+}*/
+.main-container {
+  @apply h-full w-full;
+  background-blend-mode: soft-light;
+  background-color: #7f1d1d;
+}
+
+.title {
+  font-family: "Antonio", sans-serif;
+}
+
+.title-2 {
+  font-family: "Abel", sans-serif;
+}

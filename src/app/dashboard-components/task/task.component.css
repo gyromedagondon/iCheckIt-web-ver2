@@ -1,0 +1,353 @@
+.task-container-middle {
+  @apply h-40 w-2/3 shadow-lg mr-3 pl-5 pb-5 mb-5 pt-4;
+  font-family: Antonio, Abel;
+  background-color: #ffff;
+}
+
+.elements-firstrow-container {
+  @apply h-auto w-auto flex justify-start pb-5;
+}
+
+.elements-secondrow-container {
+  @apply h-auto w-auto flex justify-start pb-5;
+}
+
+.elements-thirdrow-container {
+  @apply h-auto w-full flex justify-start pb-5;
+}
+
+.uploadedBy-container-left-main {
+  @apply h-auto w-auto;
+}
+
+.uploadedBy-container-left {
+  @apply w-1/3 h-auto shadow-lg mr-10 pl-5;
+  background-color: #52525b;
+  font-family: Antonio;
+  border-radius: 15px;
+}
+
+.taskDeadline-container-mid {
+  @apply h-auto shadow-lg pl-5 mr-10;
+  font-family: Antonio;
+  width: 30%;
+  border-radius: 15px;
+  background-color: #52525b;
+}
+
+.taskDeadline-container-mid-main {
+  @apply h-auto w-auto;
+}
+
+.taskScope-container-right {
+  @apply w-1/3 h-auto shadow-lg pl-5;
+  font-family: Antonio;
+  background-color: white;
+  word-wrap: break-word;
+  border-radius: 15px;
+}
+
+.taskScope-container-right-main {
+  @apply h-auto w-auto;
+}
+
+.piechart-container-right {
+  @apply w-1/3 h-auto shadow-lg pl-5;
+  background-color: #35414f;
+  font-family: Antonio;
+}
+
+.piechart-container-right-main {
+  @apply h-auto w-auto;
+}
+
+.taskDescrip-container-left-main {
+  @apply h-auto w-auto;
+}
+
+.taskDescrip-container-middle {
+  @apply h-auto w-2/3 shadow-lg mr-10 pl-5;
+  background-color: white;
+  font-family: Antonio;
+  white-space: pre-wrap;
+  border-radius: 15px;
+}
+
+.input-text {
+  @apply text-black flex flex-row justify-end;
+  font-family: "Abel", "FontAwesome";
+}
+
+.pending-container-left {
+  @apply w-1/3 h-auto shadow-lg pl-5;
+  background-color: #ffff00;
+  font-family: Antonio;
+  border-radius:15px;
+}
+
+.approval-container-right {
+  @apply w-1/3 h-auto shadow-lg pl-5;
+  background-color: #ff640d;
+  font-family: Antonio;
+  border-radius:15px;
+}
+
+.late-container-left {
+  @apply w-1/3 h-auto shadow-lg pl-5;
+  background-color: #f00000;
+  font-family: Antonio;
+  border-radius: 15px;
+}
+
+.approved-container-right {
+  @apply w-1/3 h-auto shadow-lg pl-5;
+  background-color: #00b633;
+  font-family: Antonio;
+  border-radius: 15px;
+}
+
+/* .pending-container-left {
+  @apply w-1/3 h-40 shadow-lg mr-10 pl-5;
+  background-color: #ffff00;
+  font-family: Antonio;
+}
+.taskScope-container-right {
+  @apply w-1/3 h-auto shadow-lg mr-10 pl-5;
+  font-family: Antonio;
+  background-color: #ffff;
+}
+.taskScope-container-right-main {
+  @apply h-auto w-auto;
+}
+.pending-container-left-main {
+  @apply h-full w-full;
+}
+.approval-container-right {
+  @apply w-1/3 h-40 shadow-lg mr-10 pl-5;
+  background-color: #ff640d;
+  font-family: Antonio;
+}
+.approval-container-right-main {
+  @apply h-full w-full;
+} */
+
+/* .late-container-left-main {
+  @apply h-full w-full;
+}
+.late-container-left {
+  @apply w-1/3 h-40 shadow-lg mr-10 pl-5;
+  background-color: #f00000;
+  font-family: Antonio;
+}
+.approved-container-right {
+  @apply w-1/3 h-40 shadow-lg mr-10 pl-5;
+  background-color: #00b633;
+  font-family: Antonio;
+} */
+.approveAll-icon {
+  @apply ml-5 mr-4;
+}
+
+.rejectAll-icon {
+  @apply mr-1;
+}
+
+.approved-container-right-main {
+  @apply h-full w-full;
+}
+
+.admin-container-header {
+  @apply h-auto p-3 w-full text-white text-lg flex flex-row justify-start;
+  font-family: "Antonio", sans-serif;
+  background-color: #52525b;
+  border-radius: 20px 20px 0px 0px;
+}
+
+.acceptReject-Label {
+  @apply h-auto w-full text-white text-lg flex flex-row justify-end mr-9;
+}
+
+.admin-container-children {
+  @apply flex p-2 w-full items-center justify-start shadow-md;
+  transition: 0.15s all ease-in-out;
+  margin-bottom: 1.5px;
+  font-family: "Antonio", sans-serif;
+  cursor: pointer;
+  background-color: white;
+}
+
+.admin-container-children-left {
+  @apply w-1/2 flex flex-row h-full pl-2 items-center;
+}
+
+.admin-container-children-right {
+  @apply w-1/3 text-right flex flex-row;
+}
+
+.acceptRejectIcon {
+  @apply text-right flex flex-row justify-end;
+}
+
+.checkIcon {
+  @apply flex justify-end items-start mr-2 ml-2;
+  transition: 0.1s all ease-in-out;
+}
+
+  .checkIcon svg {
+    @apply mr-2;
+    transition: 0.1s all ease-in-out;
+  }
+
+    .checkIcon svg:hover {
+      color: #00b633;
+    }
+
+.xIcon {
+  @apply flex justify-end items-start pr-2;
+}
+
+  .xIcon svg {
+    transition: 0.1s all ease-in-out;
+  }
+
+    .xIcon svg:hover {
+      color: #f00000;
+    }
+
+.recipient-late {
+  @apply mr-20;
+  color: red;
+}
+
+.recipient-pending {
+  @apply mr-24;
+  color: yellow;
+}
+
+.recipient-forApproval {
+  color: orange;
+}
+
+.recipient-accomplished {
+  color: green;
+}
+
+/* modal css */
+.modal-container {
+  @apply fixed z-10 inset-0 overflow-y-auto;
+}
+
+.modal-center {
+  @apply flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0;
+}
+
+.modal-overlay {
+  @apply fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity;
+}
+
+.modal-container-spacing {
+  @apply hidden sm:inline-block sm:align-middle sm:h-screen;
+}
+
+.modal {
+  @apply inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full;
+}
+
+.modal-bg {
+  @apply bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4;
+}
+
+.modal-header {
+  @apply sm:flex sm:items-start;
+}
+
+.modal-header-icon-edit {
+  @apply mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-yellow-200 sm:mx-0 sm:h-10 sm:w-10;
+}
+
+.modal-header-icon-delete {
+  @apply mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-red-300 sm:mx-0 sm:h-10 sm:w-10;
+}
+
+.modal-header-title {
+  @apply mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left;
+}
+
+  .modal-header-title h3 {
+    @apply text-lg leading-6 font-medium text-gray-900;
+  }
+
+  .modal-header-title p {
+    @apply text-sm text-gray-500;
+  }
+
+.modal-form-container {
+  @apply w-full h-full;
+}
+
+.modal-form {
+  @apply bg-white rounded px-8 pt-6 pb-8;
+}
+
+  .modal-form label {
+    @apply block text-gray-700 text-sm font-bold mb-2;
+  }
+
+  .modal-form input {
+    @apply shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none;
+  }
+
+  .modal-form .error-msg {
+    @apply text-red-500 text-xs italic;
+  }
+
+.modal-buttons {
+  @apply bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse;
+}
+
+.addBtn {
+  @apply w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-600 text-base font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 sm:ml-3 sm:w-auto sm:text-sm;
+}
+
+.addBtn-disabled {
+  @apply w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-300 text-base font-medium text-white hover:bg-green-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-300 sm:ml-3 sm:w-auto sm:text-sm;
+}
+
+.AcceptBtn {
+  @apply w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-600 text-base font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 sm:ml-3 sm:w-auto sm:text-sm;
+}
+
+.deleteBtn {
+  @apply w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm;
+}
+
+.deleteBtn-disabled {
+  @apply w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-300 text-base font-medium text-white hover:bg-red-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-300 sm:ml-3 sm:w-auto sm:text-sm;
+}
+
+.cancelBtn {
+  @apply mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm;
+}
+
+.login-form-error {
+  @apply text-red-700 italic block text-sm;
+  margin-top: -0.75rem;
+}
+
+/*.main-title {
+  background-blend-mode: soft-light;
+  background-color: #7d1d2d;
+}*/
+.main-container {
+  @apply h-full w-full;
+  background-blend-mode: soft-light;
+  background-color: #7f1d1d;
+}
+
+.title {
+  font-family: "Antonio", sans-serif;
+}
+
+.title-2 {
+  font-family: "Abel", sans-serif;
+}

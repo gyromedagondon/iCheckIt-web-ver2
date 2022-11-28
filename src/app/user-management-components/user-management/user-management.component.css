@@ -1,0 +1,248 @@
+.admin-container {
+  @apply flex justify-center w-full h-auto;
+}
+.dept-heads {
+  @apply w-1/2 h-auto mr-2;
+}
+.verify-users {
+  @apply w-full h-auto;
+}
+.verify-users-div {
+  @apply w-1/2 flex flex-row h-full pl-2 items-center;
+  border-left: #ffe400 25px solid;
+}
+.students {
+  @apply w-full h-auto mt-8;
+}
+.cics-admins {
+  @apply w-1/2 h-auto ml-2;
+}
+.admin-container-header {
+  @apply h-auto p-3 w-full text-white text-lg flex flex-row justify-start;
+  font-family: "Antonio", sans-serif;
+  background-color: #52525b;
+  border-radius: 20px 20px 0px 0px;
+}
+.search-bar {
+  @apply h-auto p-3 w-full text-white text-lg flex flex-row justify-end;
+}
+.admin-container-header-text {
+  @apply h-auto w-full text-white text-lg flex flex-row items-center justify-start;
+}
+.admin-container-header-students {
+  @apply h-auto w-full text-white text-lg flex flex-row ;
+}
+.admin-container-header-status {
+  @apply h-auto w-full text-white text-lg flex flex-row justify-end;
+}
+.admin-container-header-program {
+  @apply h-auto w-full text-white text-lg flex flex-row ;
+}
+.admin-container-header-section {
+  @apply h-auto w-full text-white justify-end text-lg flex flex-row ;
+}
+.input-text {
+  @apply text-black flex flex-row justify-end;
+  font-family: "Abel", "FontAwesome";
+}
+.archived-accounts-container {
+  @apply h-auto shadow-lg;
+  background-color: #52525b;
+  font-family: Antonio;
+}
+/* .whole-container {
+  @apply flex p-2 w-full items-center justify-start shadow-md ;
+  transition: .15s all ease-in-out;
+  margin-bottom: 1.5px;
+  font-family: 'Antonio', sans-serif;
+  cursor: pointer;
+} */
+.admin-container-children {
+  @apply flex p-2 w-full items-center justify-start shadow-md;
+  transition: 0.15s all ease-in-out;
+  margin-bottom: 1.5px;
+  font-family: "Antonio", sans-serif;
+  cursor: pointer;
+  background-color: white;
+}
+.admin-container-children:hover {
+  background-color: #dee2e7;
+}
+.admin-container-children-left {
+  @apply w-1/2 flex flex-row h-full pl-2 items-center;
+}
+.admin-container-children-left svg {
+  @apply mr-4;
+}
+.admin-container-children-right {
+  @apply w-1/2 text-right pr-2;
+}
+.btn-func {
+  background-color: #dc2626;
+}
+.p-2 mx-1 title-2 capitalize {
+  background-color: darkred;
+}
+
+.main-title-buttons {
+  @apply px-10 py-2 border border-gray-300 text-white mr-5 text-sm;
+  background-color: #dc2626;
+}
+.department-filter-container {
+  @apply h-auto w-1/12 text-lg flex flex-row justify-end text-black ml-40;
+}
+.section-filter-container {
+  @apply h-auto w-1/12 text-lg flex flex-row justify-end text-black ml-10;
+}
+.select-options {
+  @apply text-sm;
+}
+.course {
+  @apply text-white;
+}
+.department-filter {
+  @apply flex flex-row justify-end;
+}
+.option-value-style {
+  @apply text-black;
+}
+/* modal css */
+.modal-container {
+  @apply fixed z-10 inset-0 overflow-y-auto;
+}
+.modal-center {
+  @apply flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0;
+}
+.modal-overlay {
+  @apply fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity;
+}
+.modal-container-spacing {
+  @apply hidden sm:inline-block sm:align-middle sm:h-screen;
+}
+.modal {
+  @apply inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full;
+}
+.modal-bg {
+  @apply bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4;
+}
+.modal-header {
+  @apply sm:flex sm:items-start;
+}
+.modal-header-icon-edit {
+  @apply mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-yellow-200 sm:mx-0 sm:h-10 sm:w-10;
+}
+.modal-header-icon-delete {
+  @apply mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-red-300 sm:mx-0 sm:h-10 sm:w-10;
+}
+.modal-header-icon-create {
+  @apply mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-green-300 sm:mx-0 sm:h-10 sm:w-10;
+}
+.modal-header-title {
+  @apply mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left;
+}
+.modal-header-title h3 {
+  @apply text-lg leading-6 font-medium text-gray-900;
+}
+.modal-header-title p {
+  @apply text-sm text-gray-500;
+}
+.modal-form-container {
+  @apply w-full h-full;
+}
+.modal-form {
+  @apply bg-white rounded px-8 pt-6 pb-8;
+}
+.modal-form label {
+  @apply block text-gray-700 text-sm font-bold mb-2;
+}
+.modal-form input {
+  @apply shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none;
+}
+.modal-form select {
+  @apply shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none;
+}
+.modal-form .error-msg {
+  @apply text-red-500 text-xs italic;
+}
+.modal-buttons {
+  @apply px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse;
+}
+.addBtn {
+  @apply w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 sm:ml-3 sm:w-auto sm:text-sm;
+}
+.addBtn-disabled {
+  @apply w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-300 text-base font-medium text-white hover:bg-red-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-300 sm:ml-3 sm:w-auto sm:text-sm;
+}
+.deleteBtn {
+  @apply w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm;
+}
+.deleteBtn-disabled {
+  @apply w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-300 text-base font-medium text-white hover:bg-red-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-300 sm:ml-3 sm:w-auto sm:text-sm;
+}
+.cancelBtn {
+  @apply mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-red-500 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm;
+}
+.login-form-error {
+  @apply text-red-700 italic block text-sm;
+  margin-top: -0.75rem;
+}
+.login-form-error-ust {
+  @apply text-red-700 italic block text-sm;
+  margin-top: 1;
+}
+.uploadedBy-container-left-main {
+  @apply h-auto w-auto;
+}
+.uploadedBy-container-left {
+  @apply w-1/3 h-auto shadow-lg mr-10 pl-5;
+  background-color: #35414f;
+  font-family: Antonio;
+  background-color: #52525b;
+  border-radius: 15px;
+}
+.taskDeadline-container-mid {
+  @apply h-auto shadow-lg pl-5 mr-10;
+  background-color: #35414f;
+  font-family: Antonio;
+  width: 30%;
+  border-radius: 15px;
+}
+.taskDeadline-container-mid-main {
+  @apply h-auto w-auto;
+}
+.taskScope-container-right {
+  @apply w-1/3 h-auto shadow-lg pl-5;
+  font-family: Antonio;
+  background-color: #ffff;
+  word-wrap: break-word;
+}
+.elements-secondrow-container {
+  @apply h-auto w-auto flex justify-start pb-5;
+}
+.pending-container-left {
+  @apply w-1/3 h-auto shadow-lg pl-5;
+  background-color: #35414f;
+  font-family: Antonio;
+}
+.main-container {
+  @apply h-full w-full;
+  background-blend-mode: soft-light;
+  background-color: #7f1d1d;
+}
+/*.main-title {
+  background-blend-mode: soft-light;
+  background-color: #7d1d2d;
+}*/
+
+.title {
+  font-family: "Antonio", sans-serif;
+}
+
+.title-2 {
+  font-family: "Abel", sans-serif;
+  background-color: #35414f;
+}
+
+.title-3 {
+  font-family: "Abel", sans-serif;
+}

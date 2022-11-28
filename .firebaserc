@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "icheckit-6a8bb": {
+      "hosting": {
+        "iCheckit": [
+          "icheckit-6a8bb"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "icheckit-6a8bb"
+  }
+}

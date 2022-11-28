@@ -1,0 +1,115 @@
+<app-navbar></app-navbar>
+<!-- NAVBAR -->
+<div class="main-container" *ngIf="fsData as user">
+  <!-- MAIN CONTAINER LAGI NYONG LAGYAN NITO -->
+  <div class="bg-ust-back bg-cover bg-no-repeat bg-center main-title">
+    <div class="p-6 main-title-text text-white flex">
+      <h1>{{ term }}</h1>
+      <div class="flex ml-auto">
+     
+      </div>
+    </div>
+    <div class="p-6 text-center text-white">
+      <p class="text-5xl title">
+        iCheckit | College of Information and Computing Sciences
+      
+
+      </p>
+      <p class="mt-4 text-2xl title-3 uppercase tracking-widest">
+          Archived Accounts Section
+      </p>
+    </div>
+  </div>
+
+  <!--Total Archived-->
+  <div class="flex flex-col m-4">
+    <div class="p-4 antonio shadow-lg mr-auto ml-auto rounded-lg bg-[#423C3C] text-white flex flex-col justify-center items-center"> 
+       <h1 class="text-[1.5rem]">Total Archived Accounts:</h1> 
+       <h1 class="text-[3rem]">{{totalArchived}}</h1>
+     </div>
+
+<!--List Container-->
+     <div class="flex flex-col" *ngIf="studentUsers$ as students">
+<!--Sort and Search-->
+<div class="m-6">
+
+    <div class="flex flex-row">
+    <!--Sort-->
+    <div class="flex flex-row">
+<div class="flex flex-row gap-4 mb-2 items-center text-gray-600 antonio">
+        <h1 class="font-bold text-black ">Sort By:</h1>
+        <select class="rounded-md" name="sortby" [(ngModel)]="selectedOption" (ngModelChange)="sortBy($event)">
+            <option *ngFor="let o of options">
+      {{o}}
+   </option>
+           
+        </select>
+    </div>
+      </div>
+
+
+      <!--Search-->
+ <input type="text" [(ngModel)]="studentList" name="studentList" class="ml-auto w-1/4 mb-5 float-right rounded-full input-text"
+        placeholder="&#xf002; Search for Data" />
+</div>
+
+    <div class="admin-container-header">
+        <div class="admin-container-header-students">
+          <h1>Students:</h1>
+        </div>
+        <div class="admin-container-header-program">
+          <h1>Degree Program:</h1>
+        </div>
+        <div class="admin-container-header-section">
+          <h1>Section:</h1>
+        </div>
+        <div class="admin-container-header-status">
+          <h1>Year Graduated:</h1>
+        </div>
+      </div>
+
+      <!-- <div class="whole-container" *ngFor="let student of students | paginate: { itemsPerPage: 10, currentPage: p }"> -->
+      <div class="admin-container-children" *ngFor="
+          let student of students
+            | paginate: { itemsPerPage: 100, currentPage: p }
+            | filter: studentList
+        " [routerLink]="['/user/', student.uid]">
+        <div class="admin-container-children-left">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+            <path
+              d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z" />
+          </svg>
+          <p>{{ student.displayName }}</p>
+        </div>
+        <div class="admin-container-children-right">
+          <p class="text-left">{{ student.course }}</p>
+        </div>
+        <div class="admin-container-children-right" *ngIf="student.section != ''">
+          <span *ngIf="student.section.slice(1, 3) == 'IT'"
+            class="text-indigo-100 bg-indigo-700 px-2 py-1 mr-1 rounded">{{ student.section }}</span>
+          <span *ngIf="student.section.slice(1, 3) == 'IS'"
+            class="text-green-100 bg-green-700 px-2 py-1 mr-1 rounded">{{ student.section }}</span>
+          <span *ngIf="student.section.slice(1, 3) == 'CS'" class="text-red-100 bg-red-700 px-2 py-1 mr-1 rounded">{{
+            student.section }}</span>
+        </div>
+        <div class="admin-container-children-right" *ngIf="student.section == ''">
+          <span
+            class="text-indigo-100 bg-indigo-700 px-2 py-1 mr-1 rounded">No Section</span>
+        </div>
+        <div class="admin-container-children-right">
+          <p>{{ student.yearGraduated }}</p>
+          <!-- <p *ngIf="student.verified == true">Verified</p>
+          <p *ngIf="student.verified == false">Not Verified</p> -->
+        </div>
+      </div>
+      <!-- </div> -->
+      <!-- </div> -->
+      <pagination-controls (pageChange)="p = $event"></pagination-controls>
+    </div>
+
+
+</div>
+
+     </div>
+
+  </div>

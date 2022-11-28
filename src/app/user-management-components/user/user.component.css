@@ -1,0 +1,235 @@
+.profile-container {
+  @apply h-auto w-full flex justify-center items-start;
+  background-color: white;
+  border-radius: 0px 0px 20px 20px;
+}
+.profile-container-left {
+  @apply w-1/2 h-full mr-3;
+}
+.profile-photo-container {
+  @apply h-auto w-full flex items-start;
+  background-color: white;
+  border-radius: 20px 20px 0px 0px;
+  padding: 20px 0px 0px 50px;
+}
+.profile-container-left-header {
+  @apply h-auto p-3 w-full text-red-700 text-lg;
+  font-family: "Antonio", sans-serif;
+  font-size: 20px;
+  /*background-color: #35414f;*/
+  background-color: white;
+}
+
+.profile-container-left-main {
+  @apply h-full w-full;
+}
+.profile-details {
+  /*@apply flex justify-center items-start h-full w-full p-5 flex-col text-center;*/
+  @apply flex justify-center items-start h-full w-full p-8 flex-col text-center;
+  font-family: "Abel", sans-serif;
+  background-color: white;
+  border-radius: 20px;
+  font-size: 20px;
+  padding: 0px 32px 96px 32px;
+}
+.details-title {
+  @apply font-bold;
+}
+/*.profile-container-right {
+  @apply flex justify-center items-center flex-col w-1/2 h-auto ml-3;
+}*/
+.user-actions {
+  @apply h-auto w-full mb-4;
+}
+.actions-delete {
+  @apply flex p-2 w-96 pl-4;
+  transition: 0.2s all ease-in-out;
+  border-left: 1.5rem #b7152f solid;
+  margin-bottom: 1.5px;
+  font-family: "Antonio", sans-serif;
+  cursor: pointer;
+  background-color: #737373;
+  border-radius: 15px;
+}
+
+.actions-edit:hover {
+  border-left: 2.3rem #ffe400 solid;
+  background-color: #404040;
+}
+
+.actions-delete:hover {
+  border-left: 2.3rem #b7152f solid;
+  background-color: #404040;
+  
+}
+
+.actions-edit {
+  @apply flex p-2 w-96 pl-4 shadow-md;
+  transition: 0.2s all ease-in-out;
+  border-left: 1.5rem #ffe400 solid;
+  margin-bottom: 1.5px;
+  font-family: "Antonio", sans-serif;
+  cursor: pointer;
+  background-color: #737373;
+  border-radius: 15px;
+  padding: 12px;
+}
+.actions-delete {
+  @apply flex p-2 w-96 pl-4 shadow-md;
+  transition: 0.2s all ease-in-out;
+  border-left: 1.5rem #b7152f solid;
+  margin-bottom: 1.5px;
+  font-family: "Antonio", sans-serif;
+  cursor: pointer;
+  background-color: #737373;
+  border-radius: 15px;
+  padding: 12px;
+}
+.actions-edit{
+  @apply flex p-2 w-96 pl-4 shadow-md;
+  transition: 0.2s all ease-in-out;
+  border-left: 1.5rem #ffe400 solid;
+  margin-bottom: 1.5px;
+  font-family: "Antonio", sans-serif;
+  cursor: pointer;
+  background-color: #737373;
+  border-radius: 15px;
+  padding: 12px;
+}
+.actions-edit svg{
+    color: white;
+}
+.actions-delete {
+  @apply flex p-2 w-96 pl-4 shadow-md;
+  transition: 0.2s all ease-in-out;
+  border-left: 1.5rem #b7152f solid;
+  margin-bottom: 1.5px;
+  font-family: "Antonio", sans-serif;
+  cursor: pointer;
+  background-color: #737373;
+  border-radius: 15px;
+  padding: 12px;
+}
+.account-type {
+  @apply h-auto w-full p-3;
+  background-color: #35414f;
+}
+.account-status-verified {
+  @apply h-auto w-full p-3 mb-4;
+  /* background-color: #00B633; */
+}
+.account-status-not-verified {
+  @apply h-auto w-full p-3 mb-4;
+  /* background-color: #F00000; */
+}
+.account-type h1,
+.account-status-not-verified h1,
+.account-status-verified h1 {
+  @apply text-white;
+  font-family: "Antonio", sans-serif;
+}
+.account-type p,
+.account-status-not-verified p,
+.account-status-verified p {
+  @apply text-white;
+  font-family: "Antonio", sans-serif;
+}
+
+/* modal css */
+.modal-container {
+  @apply fixed z-10 inset-0 overflow-y-auto;
+}
+.modal-center {
+  @apply flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0;
+}
+.modal-overlay {
+  @apply fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity;
+}
+.modal-container-spacing {
+  @apply hidden sm:inline-block sm:align-middle sm:h-screen;
+}
+.modal {
+  @apply inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full;
+}
+.modal-bg {
+  @apply bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4;
+}
+.modal-header {
+  @apply sm:flex sm:items-start;
+}
+.modal-header-icon-edit {
+  @apply mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-yellow-200 sm:mx-0 sm:h-10 sm:w-10;
+}
+.modal-header-icon-delete {
+  @apply mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-red-300 sm:mx-0 sm:h-10 sm:w-10;
+}
+.modal-header-title {
+  @apply mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left;
+}
+.modal-header-title h3 {
+  @apply text-lg leading-6 font-medium text-gray-900;
+}
+.modal-header-title p {
+  @apply text-sm text-gray-500;
+}
+.modal-form-container {
+  @apply w-full h-full;
+}
+.modal-form {
+  @apply bg-white rounded px-8 pt-6 pb-8;
+}
+.modal-form label {
+  @apply block text-gray-700 text-sm font-bold mb-2;
+}
+.modal-form input {
+  @apply shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none;
+}
+.modal-form .error-msg {
+  @apply text-red-500 text-xs italic;
+}
+.modal-buttons {
+  @apply bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse;
+}
+.addBtn {
+  @apply w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 sm:ml-3 sm:w-auto sm:text-sm;
+}
+.addBtn-disabled {
+  @apply w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-300 text-base font-medium text-white hover:bg-red-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-300 sm:ml-3 sm:w-auto sm:text-sm;
+}
+.deleteBtn {
+  @apply w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm;
+}
+.deleteBtn-disabled {
+  @apply w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-300 text-base font-medium text-white hover:bg-red-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-300 sm:ml-3 sm:w-auto sm:text-sm;
+}
+.cancelBtn {
+  @apply mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm;
+}
+.login-form-error {
+  @apply text-red-700 italic block text-sm;
+  margin-top: -0.75rem;
+}
+.status-verified {
+  @apply text-green-600;
+}
+.status-not-verified {
+  @apply text-red-600;
+}
+.title {
+  font-family: 'Antonio', sans-serif;
+}
+
+.title-2 {
+  font-family: 'Abel', sans-serif;
+}
+
+
+.main-container {
+  @apply h-full w-full;
+  background-blend-mode: soft-light;
+  background-color: #7f1d1d;
+}
+.sub-container {
+  @apply h-full;
+}
+

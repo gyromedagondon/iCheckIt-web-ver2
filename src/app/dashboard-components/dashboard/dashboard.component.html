@@ -1,0 +1,285 @@
+<app-navbar></app-navbar> <!-- NAVBAR -->
+<div class="h-full bg-ust-back bg-cover bg-no-repeat main-container" *ngIf="fsData as user">
+  <!--HEADER CONTAINER-->
+  <div class="bg-center main-title">
+    <div class="p-6 main-title-text text-white flex">
+      <h1>{{term}}</h1>
+    </div>
+    <div class="p-6 text-center text-white">
+      <p class="text-5xl title">Task List</p>
+      <p class="mt-4 text-2xl title-2 tracking-widest uppercase">iCheckit | College of Information and Computing Sciences</p>
+    </div>
+  </div>
+  <!--END OF HEADER CONTAINER-->
+  <div class="sub-container">
+    <div class="students" *ngIf="verifyTasks$ as tasks">
+      <div class="flex flex-row">
+        <div class="flex flex-row gap-4 items-center relative top-12 text-gray-600 antonio">
+          <h1 class="text-white">Sort By:</h1>
+          <select class="rounded-md" name="sortby" [(ngModel)]="selectedOption2" (ngModelChange)="sortBy($event)">
+            <option *ngFor="let o of options">
+              {{o}}
+            </option>
+
+          </select>
+        </div>
+      </div>
+
+      <input type="text" [(ngModel)]="taskList" name="taskList" class="w-1/4 mb-5 float-right rounded-full input-text" placeholder="&#xf002; Search for a task">
+      <div class="admin-container-header">
+        <h1>Tasks:</h1>
+        <!-- paginate: { itemsPerPage: 10, currentPage: p } -->
+        <div class="flex justify-end w-full align-middle" [routerLink]="['/archive']" routerLinkActive="router-link-active">
+          <button class="archive"> <span class="mr-2">&#xf187;</span> View Archive </button>
+        </div>
+      </div>
+      <div class="admin-container-children" *ngFor="let task of tasks | paginate: { itemsPerPage: 50, currentPage: p } | filter: taskList"
+           [routerLink]="['/task/', task.id]">
+        <div class="admin-container-children-left-pending" *ngIf="task.status == 'Pending'">
+          <p class="text-xl">{{task.title}}</p>
+          <p class="mt-2">DATE CREATED: {{task.createdAt | date}}  |  TASK DURATION: {{task.startsAt | date}} - {{task.deadline | date}}</p>
+          <p>
+            <span class="inline-flex items-center justify-center text-xs font-bold leading-none"
+                  *ngFor="let item of task.scope">
+              <span *ngIf="item.slice(1, 3) == 'IT'"
+                    class="text-indigo-100 bg-indigo-700 px-2 py-1 mr-1 rounded">{{item}}</span>
+              <span *ngIf="item.slice(1, 3) == 'IS'"
+                    class="text-green-100 bg-green-700 px-2 py-1 mr-1 rounded">{{item}}</span>
+              <span *ngIf="item.slice(1, 3) == 'CS'"
+                    class="text-red-100 bg-red-700 px-2 py-1 mr-1 rounded">{{item}}</span>
+            </span>
+          </p>
+        </div>
+      </div>
+      <pagination-controls (pageChange)="p = $event"></pagination-controls>
+    </div>
+
+    <div class="flex flex-col justify-center items-center">
+      <button (click)="triggerAddTaskModal()" class="bg-red-700 text-white mt-3 w-full inline-flex justify-center rounded-md border border-gray-300
+            shadow-sm px-4 py-2 text-base font-medium  hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500
+            sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm mb-8" *ngIf="this.fsData.role === 'CICS Office Staff' && 'Department Head'">
+        Add Task
+      </button>
+    </div> 
+  </div>
+
+<!--MODAL CONTAINER FOR ADD TASK-->
+<div class="modal-container" aria-labelledby="modal-title" role="dialog" aria-modal="true" *ngIf="addTaskModal">
+  <div class="modal-center">
+    <div class="modal-overlay" aria-hidden="true"></div>
+    <span class="modal-container-spacing" aria-hidden="true">&#8203;</span>
+    <div class="modal">
+      <form [formGroup]="addTaskForm" (ngSubmit)="addTask()">
+        <div class="modal-bg">
+          <div class="modal-header">
+            <div class="modal-header-icon-create">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
+              </svg>
+            </div>
+            <div class="modal-header-title">
+              <h3 id="modal-title">
+                Create A New Task
+              </h3>
+              <div class="mt-2">
+                <p>
+                  Create a new task to be uploaded to the verified students in the system.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-form-container">
+          <div class="modal-form">
+            <div class="mb-4">
+              <label for="title">
+                Task Title
+              </label>
+              <input id="title" type="text" placeholder="Input the title of this task" autocomplete="on"
+                     formControlName="title">
+            </div>
+            <div class="login-form-error"
+                 *ngIf="addTaskForm.controls.title.errors?.required && addTaskForm.controls.title.touched">
+              Task title is required.
+            </div>
+            <div class="mb-4">
+              <label for="description">
+                Task Description
+              </label>
+              <textarea id="description" type="text" placeholder="Input the description of this task" autocomplete="on"
+                        formControlName="description" class="w-full h-64"> </textarea>
+            </div>
+            <div class="login-form-error"
+                 *ngIf="addTaskForm.controls.description.errors?.required && addTaskForm.controls.description.touched">
+              Task description is required.
+            </div>
+            <div class="mb-4">
+              <label for="scope">
+                Task Scope
+              </label>
+              <select name="scope" id="scope" style="width: 100%;" (change)="changeTaskScope($event)"
+                      formControlName="scope">
+                <option value="" disabled>Choose the scope of the task</option>
+                <optgroup label="Departmental" class="italic">
+                  <option>All Departments **</option>
+                  <option>All Departments (1st Year)</option>
+                  <option>All Departments (2nd Year)</option>
+                  <option>All Departments (3rd Year)</option>
+                  <option>All Departments (4th Year)</option>
+                  <option>BS Information Technology</option>
+                  <option>BS Information Systems</option>
+                  <option>BS Computer Science</option>
+                </optgroup>
+                <optgroup label="BS Information Technology" class="italic">
+                  <option>BS Information Technology (1st Year)</option>
+                  <option>BS Information Technology (2nd Year)</option>
+                  <option>BS Information Technology (3rd Year)</option>
+                  <option>BS Information Technology (4th Year)</option>
+                </optgroup>
+                <optgroup label="BS Information Technology (1st Year)" class="italic">
+                  <option *ngFor="let it of itScope1st">{{it}}</option>
+                </optgroup>
+                <optgroup label="BS Information Technology (2nd Year)" class="italic">
+                  <option *ngFor="let it of itScope2nd">{{it}}</option>
+                </optgroup>
+                <optgroup label="BS Information Technology (3rd Year)" class="italic">
+                  <option *ngFor="let it of itScope3rd">{{it}}</option>
+                </optgroup>
+                <optgroup label="BS Information Technology (4th Year)" class="italic">
+                  <option *ngFor="let it of itScope4th">{{it}}</option>
+                </optgroup>
+                <optgroup label="BS Information Systems" class="italic">
+                  <option>BS Information Systems (1st Year)</option>
+                  <option>BS Information Systems (2nd Year)</option>
+                  <option>BS Information Systems (3rd Year)</option>
+                  <option>BS Information Systems (4th Year)</option>
+                </optgroup>
+                <optgroup label="BS Information Systems (1st Year)" class="italic">
+                  <option *ngFor="let is of isScope1st">{{is}}</option>
+                </optgroup>
+                <optgroup label="BS Information Systems (2nd Year)" class="italic">
+                  <option *ngFor="let is of isScope2nd">{{is}}</option>
+                </optgroup>
+                <optgroup label="BS Information Systems (3rd Year)" class="italic">
+                  <option *ngFor="let is of isScope3rd">{{is}}</option>
+                </optgroup>
+                <optgroup label="BS Information Systems (4th Year)" class="italic">
+                  <option *ngFor="let is of isScope4th">{{is}}</option>
+                </optgroup>
+                <optgroup label="BS Computer Science" class="italic">
+                  <option>BS Computer Science (1st Year)</option>
+                  <option>BS Computer Science (2nd Year)</option>
+                  <option>BS Computer Science (3rd Year)</option>
+                  <option>BS Computer Science (4th Year)</option>
+                </optgroup>
+                <optgroup label="BS Computer Science (1st Year)" class="italic">
+                  <option *ngFor="let cs of csScope1st">{{cs}}</option>
+                </optgroup>
+                <optgroup label="BS Computer Science (2nd Year)" class="italic">
+                  <option *ngFor="let cs of csScope2nd">{{cs}}</option>
+                </optgroup>
+                <optgroup label="BS Computer Science (3rd Year)" class="italic">
+                  <option *ngFor="let cs of csScope3rd">{{cs}}</option>
+                </optgroup>
+                <optgroup label="BS Computer Science (4th Year)" class="italic">
+                  <option *ngFor="let cs of csScope4th">{{cs}}</option>
+                </optgroup>
+              </select>
+              <!--
+            <p class="error-msg">Please enter your comment for this task</p> -->
+              <div *ngIf="taskScopeArray.length > 0">
+                <!-- <p *ngFor="let item of taskScopeArray" style="display: inline-block; margin-right: 4px;">{{item}}</p> -->
+                <span class="inline-flex items-center justify-center text-xs font-bold leading-none"
+                      *ngFor="let item of taskScopeArray">
+                  <span *ngIf="item.slice(1, 3) == 'IT'"
+                        class="text-indigo-100 bg-indigo-700 px-2 py-1 mr-1 rounded">{{item}}</span>
+                  <span *ngIf="item.slice(1, 3) == 'IS'"
+                        class="text-green-100 bg-green-700 px-2 py-1 mr-1 rounded">{{item}}</span>
+                  <span *ngIf="item.slice(1, 3) == 'CS'"
+                        class="text-red-100 bg-red-700 px-2 py-1 mr-1 rounded">{{item}}</span>
+                </span>
+              </div>
+            </div>
+            <div class="login-form-error"
+                 *ngIf="addTaskForm.controls.scope.errors?.required && addTaskForm.controls.scope.touched">
+              Task scope is
+              required.
+            </div>
+
+            <div class="mb-4">
+              <label for="deadline">
+                Task Start Date:
+              </label>
+              <input type="date" id="startsAt" name="startsAt" formControlName="startsAt">
+            </div>
+            <div class="login-form-error"
+                 *ngIf="addTaskForm.controls.startsAt.errors?.required && addTaskForm.controls.startsAt.touched">
+              Task Start Date
+              is required.
+            </div>
+            <div class="login-form-error"
+                 *ngIf="invalidDate">
+              Task start date error. Cannot be a date that has passed.
+            </div>
+
+            <div class="mb-4">
+              <label for="deadline">
+                Task Deadline
+              </label>
+              <input type="date" id="deadline" name="deadline" formControlName="deadline">
+            </div>
+            <div class="login-form-error"
+                 *ngIf="addTaskForm.controls.deadline.errors?.required && addTaskForm.controls.deadline.touched">
+              Task Deadline
+              is required.
+            </div>
+            <div class="login-form-error"
+                 *ngIf="invalidDate">
+              Task deadline error. Cannot be a date that has passed.
+            </div>
+
+            <!-- <div class="login-form-error" *ngIf="createStudentForm.controls.email.errors?.required && createStudentForm.controls.email.touched">
+            Student's email is required.
+          </div>
+          <div class="login-form-error" *ngIf="createStudentForm.controls.email.errors?.email">
+            Not a valid email.
+          </div> -->
+            <!--
+          <div class="login-form-error" *ngIf="editAccountForm.controls.contactNumber.errors?.required && editAccountForm.controls.contactNumber.touched">
+            Contact number is required.
+          </div>-->
+            <!--
+          <div class="login-form-error" *ngIf="editAccountForm.controls.password.errors?.required && editAccountForm.controls.password.touched">
+            Password is required.
+          </div>-->
+          </div>
+        </div>
+        <div class="modal-buttons">
+          <button type="submit" class="addBtn" *ngIf="addTaskForm.valid">
+            Add Task
+          </button>
+          <button type="submit" class="addBtn-disabled" *ngIf="addTaskForm.invalid">
+            Add Task
+          </button>
+          <button type="submit" class="cancelBtn" *ngIf="taskScopeArray.length > 0" (click)="clearScope()">
+            Clear Scope
+          </button>
+          <button type="button" class="cancelBtn" (click)="triggerAddTaskModal()">
+            Cancel
+          </button>
+        </div>
+      </form>
+    </div>
+    </div>
+  </div>
+</div>
+<!-- end modal container for edit -->
+
+<div class="addIcon">
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+    (click)="triggerAddTaskModal()">
+    <path stroke-linecap="square" stroke-linejoin="round" stroke-width="2"
+      d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+  </svg>
+</div>
+

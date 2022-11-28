@@ -1,0 +1,32 @@
+.notif-container {
+    @apply flex flex-col justify-center fixed w-full z-50;
+}
+.notif {
+    @apply flex items-center bg-green-500 border-l-4 border-green-700 py-2 px-3 shadow-md mb-2;
+}
+/*
+.notif-icons {
+    @apply text-green-500 rounded-full bg-white mr-3;
+}
+*/
+.notif-text {
+    @apply text-white ;
+}
+.userDoesNotExist {
+    @apply flex items-center bg-red-500 border-red-700 py-2 px-3 shadow-md mb-2;
+}
+.userDoesNotExist .notif-icons{
+    @apply text-red-500 rounded-full bg-white mr-3;
+}
+.formError {
+    @apply flex items-center bg-yellow-500 border-yellow-700 py-2 px-3 shadow-md mb-2;
+}
+.formError .notif-icons{
+    @apply text-white rounded-full mr-3;
+}
+.formSuccess {
+    @apply flex items-center bg-green-500 border-green-700 py-2 px-3 shadow-md mb-2;
+}
+.formSuccess .notif-icons{
+    @apply text-green-500 rounded-full bg-white mr-3;
+}
