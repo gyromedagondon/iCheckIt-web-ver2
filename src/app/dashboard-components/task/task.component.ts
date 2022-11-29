@@ -109,7 +109,19 @@ export class TaskComponent implements OnInit {
         })
       )
       .subscribe((res) => {
+         res.recipients = res.recipients.map((user: any) => {
+           if (user?.firstName && user?.lastName) {
+             return {
+               ...user,
+               displayName: user?.firstName + ' ' + user?.lastName,
+             };
+           } else {
+             return user;
+           }
+         });
         this.taskData = res;
+
+       
         console.log('TASK DATA', res);
         this.totalRecipients = res.recipients.length;
 
@@ -363,10 +375,13 @@ export class TaskComponent implements OnInit {
         createdAt: new Date(element?.createdAt).getTime(),
         startsAt: new Date(element?.startsAt).getTime(),
         deadline: new Date(element?.deadline).getTime(),
+        lastName: element?.lastName,
+        firstName: element?.firstName,
         description: element?.description,
         displayName: element?.displayName,
         email: element?.email,
-        pushToken: element?.pushToken,
+        //pushToken: element?.pushToken,
+        isAccepted: true,
         section: element?.section,
         status: 'Accomplished',
         submissionLink: element?.submissionLink,
@@ -376,7 +391,7 @@ export class TaskComponent implements OnInit {
         uid: element?.uid,
         uploadedBy: element?.uploadedBy,
         term: element?.term,
-        submittedAt: new Date(element?.submittedAt).getTime(),
+        submittedAt: new Date(element?.submittedAt).getTime().toString(),
         attemptsLeft: element?.attemptsLeft,
         deadlineLimit: element?.deadlineLimit,
       };
@@ -416,24 +431,26 @@ export class TaskComponent implements OnInit {
 
     oldData.forEach((element: any) => {
       let updatedData = {
-        createdAt: element.createdAt,
-        startsAt: element.startsAt,
-        deadline: element.deadline,
-        description: element.description,
-        displayName: element.displayName,
-        email: element.email,
-        pushToken: element.pushToken,
-        section: element.section,
+        createdAt: new Date(element?.createdAt).getTime(),
+        startsAt: new Date(element?.startsAt).getTime(),
+        deadline: new Date(element?.deadline).getTime(),
+        description: element?.description,
+        displayName: element?.displayName,
+        email: element?.email,
+        firstName: element?.firstName,
+        lastName: element?.lastName,
+        //pushToken: element.pushToken,
+        section: element?.section,
         status: 'Pending',
-        submissionLink: element.submissionLink,
-        taskId: element.taskId,
-        title: element.title,
-        uid: element.uid,
+        submissionLink: element?.submissionLink,
+        taskId: element?.taskId,
+        title: element?.title,
+        uid: element?.uid,
         submittedAt: '',
-        uploadedBy: element.uploadedBy,
-        term: element.term,
-        attemptsLeft: element.attemptsLeft,
-        deadlineLimit: element.deadlineLimit,
+        uploadedBy: element?.uploadedBy,
+        term: element?.term,
+        attemptsLeft: element?.attemptsLeft,
+        deadlineLimit: element?.deadlineLimit,
       };
       acceptedSubmissions.push(updatedData);
     });
@@ -466,13 +483,16 @@ export class TaskComponent implements OnInit {
       deadline: new Date(recipient?.deadline).getTime(),
       description: recipient?.description,
       displayName: recipient?.displayName,
+      lastName: recipient?.lastName,
+      firstName: recipient?.firstName,
       email: recipient?.email,
       section: recipient?.section,
-      pushToken: recipient?.pushToken,
+      //pushToken: recipient?.pushToken,
+      isAccepted: true,
       status: 'Accomplished',
       submissionLink: recipient?.submissionLink,
       attachmentPaths: recipient.submissionLink,
-      submittedAt: new Date(recipient?.submittedAt).getTime(),
+      submittedAt: new Date(recipient?.submittedAt).getTime().toString(),
       taskId: recipient?.taskId,
       title: recipient?.title,
       uid: recipient?.uid,
@@ -494,28 +514,30 @@ export class TaskComponent implements OnInit {
   }
   public rejectSubmission(recipient: any) {
     let accomplishedData = {
-      createdAt: recipient.createdAt,
-      startsAt: recipient.startsAt,
-      deadline: recipient.deadline,
-      description: recipient.description,
-      displayName: recipient.displayName,
-      email: recipient.email,
-      section: recipient.section,
-      pushToken: recipient.pushToken,
+      createdAt: new Date(recipient?.createdAt).getTime(),
+      startsAt: new Date(recipient?.startsAt).getTime(),
+      deadline: new Date(recipient?.deadline).getTime(),
+      firstName: recipient?.firstName,
+      lastName: recipient?.lastName,
+      description: recipient?.description,
+      displayName: recipient?.displayName,
+      email: recipient?.email,
+      section: recipient?.section,
+      pushToken: recipient?.pushToken,
       status: 'Pending',
       submissionLink: '',
-      taskId: recipient.taskId,
-      title: recipient.title,
+      taskId: recipient?.taskId,
+      title: recipient?.title,
       submittedAt: '',
-      uid: recipient.uid,
-      uploadedBy: recipient.uploadedBy,
-      term: recipient.term,
-      attemptsLeft: recipient.attemptsLeft,
-      deadlineLimit: recipient.deadlineLimit,
+      uid: recipient?.uid,
+      uploadedBy: recipient?.uploadedBy,
+      term: recipient?.term,
+      attemptsLeft: recipient?.attemptsLeft,
+      deadlineLimit: recipient?.deadlineLimit,
     };
-    console.log(recipient.submissionLink);
+    console.log(recipient?.submissionLink);
     this.storage
-      .refFromURL(recipient.submissionLink)
+      .refFromURL(recipient?.submissionLink)
       .delete()
       .subscribe((res) => console.log(res));
 
