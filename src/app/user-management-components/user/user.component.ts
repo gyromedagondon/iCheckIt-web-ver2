@@ -182,7 +182,18 @@ export class UserComponent implements OnInit {
       )
       .subscribe((res) => {
         console.log("TARGET STUDENT", res);
-        this.student = res;
+
+        let final = {};
+        if (res?.firstName && res?.lastName) {
+          final = {
+            ...res,
+            displayName: res?.firstName + ' ' + res?.lastName,
+          };
+        } else {
+          final = res;
+        }
+        console.log(final, 'FINAL');
+        this.student = final;
       });
 
     this.route.params

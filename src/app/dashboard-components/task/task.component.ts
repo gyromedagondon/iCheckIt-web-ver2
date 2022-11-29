@@ -110,7 +110,7 @@ export class TaskComponent implements OnInit {
       )
       .subscribe((res) => {
         this.taskData = res;
-        console.log(res);
+        console.log('TASK DATA', res);
         this.totalRecipients = res.recipients.length;
 
         console.log('Pending recipients length');
@@ -360,25 +360,25 @@ export class TaskComponent implements OnInit {
 
     oldData.forEach((element: any) => {
       let updatedData = {
-        createdAt: element.createdAt,
-        startsAt: element.startsAt,
-        deadline: element.deadline,
-        description: element.description,
-        displayName: element.displayName,
-        email: element.email,
-        pushToken: element.pushToken,
-        section: element.section,
+        createdAt: new Date(element?.createdAt).getTime(),
+        startsAt: new Date(element?.startsAt).getTime(),
+        deadline: new Date(element?.deadline).getTime(),
+        description: element?.description,
+        displayName: element?.displayName,
+        email: element?.email,
+        pushToken: element?.pushToken,
+        section: element?.section,
         status: 'Accomplished',
         submissionLink: element?.submissionLink,
         attachmentPaths: element?.submissionLink,
-        taskId: element.taskId,
-        title: element.title,
-        uid: element.uid,
-        uploadedBy: element.uploadedBy,
-        term: element.term,
-        submittedAt: element.submittedAt,
-        attemptsLeft: element.attemptsLeft,
-        deadlineLimit: element.deadlineLimit,
+        taskId: element?.taskId,
+        title: element?.title,
+        uid: element?.uid,
+        uploadedBy: element?.uploadedBy,
+        term: element?.term,
+        submittedAt: new Date(element?.submittedAt).getTime(),
+        attemptsLeft: element?.attemptsLeft,
+        deadlineLimit: element?.deadlineLimit,
       };
       acceptedSubmissions.push(updatedData);
     });
@@ -461,9 +461,9 @@ export class TaskComponent implements OnInit {
 
   public acceptSubmission(recipient: any) {
     let accomplishedData = {
-      createdAt: recipient?.createdAt,
-      startsAt: recipient?.startsAt,
-      deadline: recipient?.deadline,
+      createdAt: new Date(recipient?.createdAt).getTime(),
+      startsAt: new Date(recipient?.startsAt).getTime(),
+      deadline: new Date(recipient?.deadline).getTime(),
       description: recipient?.description,
       displayName: recipient?.displayName,
       email: recipient?.email,
@@ -472,7 +472,7 @@ export class TaskComponent implements OnInit {
       status: 'Accomplished',
       submissionLink: recipient?.submissionLink,
       attachmentPaths: recipient.submissionLink,
-      submittedAt: recipient?.submittedAt,
+      submittedAt: new Date(recipient?.submittedAt).getTime(),
       taskId: recipient?.taskId,
       title: recipient?.title,
       uid: recipient?.uid,

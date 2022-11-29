@@ -70,7 +70,7 @@ export class UserManagementComponent implements OnInit {
     '4ITG',
     '4ITH',
     '4ITI',
-    '4ITJ'
+    '4ITJ',
   ];
   allSections: any = ['All sections'];
   itSection: any = [
@@ -114,9 +114,20 @@ export class UserManagementComponent implements OnInit {
     '4ITG',
     '4ITH',
     '4ITI',
-    '4ITJ'
+    '4ITJ',
   ];
-  itScope1st: any = ['1ITA', '1ITB', '1ITC', '1ITD', '1ITE', '1ITF', '1ITG', '1ITH','1ITI','1ITJ'];
+  itScope1st: any = [
+    '1ITA',
+    '1ITB',
+    '1ITC',
+    '1ITD',
+    '1ITE',
+    '1ITF',
+    '1ITG',
+    '1ITH',
+    '1ITI',
+    '1ITJ',
+  ];
   itScope2nd: any = ['2ITA', '2ITB', '2ITC', '2ITD'];
   itScope3rd: any = [
     '3ITA',
@@ -141,7 +152,7 @@ export class UserManagementComponent implements OnInit {
     '4ITG',
     '4ITH',
     '4ITI',
-    '4ITJ'
+    '4ITJ',
   ];
   csSection: any = [
     '1CSA',
@@ -259,7 +270,6 @@ export class UserManagementComponent implements OnInit {
         target.controls['email'].markAsTouched();
       });
 
-     
       this.toastService.publish(
         'Please fill up all required fields properly',
         'formError'
@@ -299,7 +309,18 @@ export class UserManagementComponent implements OnInit {
     });
 
     this.userService.getStudentUsers().subscribe((res) => {
-      this.studentUsers$ = res;
+      console.log('RES', res);
+
+      this.studentUsers$ = res.map((user: any) => {
+        if (user?.lastName && user?.firstName) {
+          return {
+            ...user,
+            displayName: user?.firstName + ' ' + user?.lastName,
+          };
+        } else {
+          return user;
+        }
+      });
       this.totalStudents = 0;
       this.totalVerified = 0;
       this.totalNotVerified = 0;
@@ -313,7 +334,9 @@ export class UserManagementComponent implements OnInit {
 
         if (
           //@ts-ignore
-          element?.isVerified == false ||  element?.isVerified == null
+          element?.isVerified == false ||
+          //@ts-ignore
+          element?.isVerified == null
         ) {
           this.totalNotVerified += 1;
         }
@@ -389,9 +412,9 @@ export class UserManagementComponent implements OnInit {
     this.createAdminModal = !this.createAdminModal;
   }
 
-  public triggerCreateDeptHeadModal(){
+  public triggerCreateDeptHeadModal() {
     this.createDeptHeadModal = !this.createDeptHeadModal;
-  } 
+  }
 
   public triggerImportUserManual() {
     this.importUserManual = !this.importUserManual;
@@ -404,8 +427,10 @@ export class UserManagementComponent implements OnInit {
 
   public createStudent() {
     if (this.createStudentForm.valid) {
-
-      const displayName = this.createStudentForm.controls['firstName'].value + " " + this.createStudentForm.controls['lastName'].value;
+      const displayName =
+        this.createStudentForm.controls['firstName'].value +
+        ' ' +
+        this.createStudentForm.controls['lastName'].value;
       this.userService
         .adminCreateStudent(
           this.createStudentForm.controls['firstName'].value,
@@ -421,8 +446,8 @@ export class UserManagementComponent implements OnInit {
     } else if (this.createStudentForm.invalid) {
       console.log(this.createStudentForm.value);
       this.createStudentForm.controls['firstName'].markAsTouched(),
-      this.createStudentForm.controls['lastName'].markAsTouched(),
-      this.createStudentForm.controls['course'].markAsTouched();
+        this.createStudentForm.controls['lastName'].markAsTouched(),
+        this.createStudentForm.controls['course'].markAsTouched();
       this.createStudentForm.controls['section'].markAsTouched();
       this.createStudentForm.controls['contactNumber'].markAsTouched();
       this.createStudentForm.controls['email'].markAsTouched();

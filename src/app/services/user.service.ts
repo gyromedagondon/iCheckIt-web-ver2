@@ -54,6 +54,34 @@ export class UserService {
     return this.afs.collection('users').doc(id).valueChanges();
   }
 
+
+  public updateAllUsers(array: Array<any>) {
+    array.map((user: any) => {
+      if (user?.uid) {
+        let newUser = {
+          ...user,
+          displayName: user?.firstName + ' ' + user?.lastName,
+        };
+
+        let splitName = user?.displayName.split(' ');
+
+        let newUser2 = {
+          ...user,
+          firstName: splitName[0],
+          lastName: splitName[1],
+        };
+
+        if (user?.firstName && user?.lastName) {
+          this.afs.collection('users').doc(user?.uid).set(newUser);
+        } else if (splitName[1] != null && splitName[1] != null) {
+          this.afs.collection('users').doc(user?.uid).set(newUser2);
+        } else {
+          this.afs.collection('users').doc(user?.uid).delete();
+        }
+      }
+    });
+  }
+  
   public getStudent(id: string): Observable<any> {
     // return this.afs.collection('users')
     // .doc(id)
