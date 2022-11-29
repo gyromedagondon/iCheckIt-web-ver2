@@ -181,6 +181,7 @@ export class UserComponent implements OnInit {
         })
       )
       .subscribe((res) => {
+        console.log("TARGET STUDENT", res);
         this.student = res;
       });
 
