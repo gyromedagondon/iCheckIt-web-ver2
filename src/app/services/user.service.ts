@@ -519,6 +519,8 @@ export class UserService {
 
   updateUserAccount(
     id: string,
+    firstName: string,
+    lastName: string,
     email: string,
     displayName: string,
     contactNumber: string,
@@ -529,6 +531,8 @@ export class UserService {
       .collection('users')
       .doc(id)
       .update({
+        firstName: firstName,
+        lastName: lastName,
         email: email,
         displayName: displayName,
         contactNumber: contactNumber.toString(),

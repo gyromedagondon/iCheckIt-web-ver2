@@ -209,7 +209,8 @@ export class UserComponent implements OnInit {
     // Validators.pattern('^[a-z0-9._%+-]+@[(ust.edu)]+\\.ph$')
 
     this.editUserForm = this.fb.group({
-      displayName: ['', Validators.required],
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
       email: [
         '',
         [
@@ -265,14 +266,21 @@ export class UserComponent implements OnInit {
   }
 
   public triggerEditUserModal() {
+
+    
     this.editUserModal = !this.editUserModal;
-    this.editUserForm.controls.displayName.setValue(this.student.displayName);
-    this.editUserForm.controls.email.setValue(this.student.email);
-    this.editUserForm.controls.contactNumber.setValue(
-      this.student.contactNumber
-    );
-    this.editUserForm.controls.course.setValue(this.student.course);
-    this.editUserForm.controls.section.setValue(this.student.section);
+    if (this.student) {
+      const displayName = this.student?.firstName + ' ' + this.student?.lastName;
+      this.editUserForm.controls.firstName.setValue(this.student?.firstName);
+      this.editUserForm.controls.lastName.setValue(this.student?.lastName);
+      //this.editUserForm.controls.displayName.setValue(displayName);
+      this.editUserForm.controls.email.setValue(this.student?.email);
+      this.editUserForm.controls.contactNumber.setValue(
+        this.student?.contactNumber
+      );
+      this.editUserForm.controls.course.setValue(this.student?.course);
+      this.editUserForm.controls.section.setValue(this.student?.section);
+    }
     // this.editUserForm.controls.department.setValue(this.student.department);
   }
 
@@ -313,11 +321,17 @@ export class UserComponent implements OnInit {
 
   public editUserProfile() {
     if (this.editUserForm.valid) {
+      const displayName =
+        this.editUserForm.controls['firstName'].value +
+        ' ' +
+        this.editUserForm.controls['lastName'].value;
       this.userService
         .updateUserAccount(
           this.student.uid,
+          this.editUserForm.controls['firstName'].value,
+          this.editUserForm.controls['lastName'].value,
           this.editUserForm.controls['email'].value,
-          this.editUserForm.controls['displayName'].value,
+          displayName,
           this.editUserForm.controls['contactNumber'].value,
           this.editUserForm.controls['course'].value,
           this.editUserForm.controls['section'].value

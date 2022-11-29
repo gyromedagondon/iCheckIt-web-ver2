@@ -54,8 +54,25 @@
         </div>
         <div class="user-actions">
           <!-- Layout for Edit student beginning -->
+          <div class="actions-edit" style="color:white" (click)="triggerEditUserModal()" *ngIf="user.role == 'Student'">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+              <path
+                d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
+            </svg>
+            <p>Edit User Profile</p>
+          </div>
+          <!-- Layout for Edit student End -->
 
    
+          <!-- Layout for Edit Admin beginning -->
+          <div class="actions-edit" style="color:white" (click)="triggerEditAdminModal()" *ngIf="user.role == 'Department Head'">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+              <path
+                d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
+            </svg>
+            <p>Edit Admin Profile</p>
+          </div>
+          <!-- Layout for Edit Admin beginning End -->
 
           <div class="actions-edit" (click)="triggerArchiveUserModal()" *ngIf="user.role == 'Student'">
             <svg xmlns="http://www.w3.org/2000/svg" style="color:white" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
@@ -73,7 +90,7 @@
             <p>Delete User</p>
           </div>
 
-          <div class="actions-delete" style="color:white" (click)="triggerDeleteModal()" *ngIf="fsData.role == 'CICS Office Staff' && user.role == 'Department Head'">
+          <div class="actions-delete" style="color:white" (click)="triggerDeleteModal()" *ngIf="fsData?.role == 'CICS Office Staff' && user?.role == 'Department Head'">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
                  stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -207,17 +224,30 @@
           <div class="modal-form-container">
             <div class="modal-form">
               <div class="mb-4">
-                <label for="displayName">
-                  User's Full Name
+                <label for="firstName">
+                  User's First Name
                 </label>
-                <input id="displayName" type="text" placeholder="Input student's full name"
-                  formControlName="displayName" autocomplete="on">
+                <input id="firstName" type="text" placeholder="Input student's first name"
+                  formControlName="firstName" autocomplete="on">
                 <!--
               <p class="error-msg">Please enter your comment for this task</p> -->
               </div>
               <div class="login-form-error"
-                *ngIf="editUserForm.controls.displayName.errors?.required && editUserForm.controls.displayName.touched">
-                Full name is required.
+                *ngIf="editUserForm.controls.firstName.errors?.required && editUserForm.controls.firstName.touched">
+                First Name is required.
+              </div>
+              <div class="mb-4">
+                <label for="lastName">
+                  User's Last Name
+                </label>
+                <input id="lastName" type="text" placeholder="Input student's last name"
+                  formControlName="lastName" autocomplete="on">
+                <!--
+              <p class="error-msg">Please enter your comment for this task</p> -->
+              </div>
+              <div class="login-form-error"
+                *ngIf="editUserForm.controls.lastName.errors?.required && editUserForm.controls.lastName.touched">
+                Last Name is required.
               </div>
 
               <!-- newly added components in edit student detail. Start from here onwards -->
