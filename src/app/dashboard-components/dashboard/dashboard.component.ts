@@ -4,7 +4,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { TaskService } from 'src/app/services/task.service';
 import { FormBuilder, Validators } from '@angular/forms';
-
+import moment from 'moment';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -13,6 +13,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 export class DashboardComponent implements OnInit {
   accomplishedTasks = 0;
   pendingTasks = 0;
+  minDate: any;
   // taskScope: any = ['1ITA','1ITB','1ITC','1ITD','1ITE','1ITF','1ITH','2ITA','2ITB','2ITC','2ITD','2ITE','2ITF','3ITA','3ITB','3ITC','3ITD','3ITF','3ITG','3ITF','3ITG','4ITA','4ITB','4ITC','4ITD','4ITE'];
   taskList: any;
   itScope: any = [
@@ -70,7 +71,7 @@ export class DashboardComponent implements OnInit {
     '4ITG',
     '4ITH',
     '4ITI',
-    '4ITJ'
+    '4ITJ',
   ];
   isScope: any = [
     '1ISA',
@@ -82,8 +83,8 @@ export class DashboardComponent implements OnInit {
     '4ISA',
     '4ISB',
   ];
-  isScope1st: any = ['1ISA', '1ISB','1ISC','1SD','1ISE'];
-  isScope2nd: any = ['2ISA', '2ISB', '2ISC','2ISD', '2ISE'];
+  isScope1st: any = ['1ISA', '1ISB', '1ISC', '1SD', '1ISE'];
+  isScope2nd: any = ['2ISA', '2ISB', '2ISC', '2ISD', '2ISE'];
   isScope3rd: any = ['3ISA', '3ISB', '3ISC', '3ISD', '3ISE'];
   isScope4th: any = ['4ISA', '4ISB', '4ISC', '4ISD', '4ISE'];
   csScope: any = [
@@ -105,12 +106,12 @@ export class DashboardComponent implements OnInit {
     '4CSA',
     '4CSB',
     '4CSC',
-    '4CSD'
+    '4CSD',
   ];
   csScope1st: any = ['1CSA', '1CSB', '1CSC', '1CSD', '1CSE'];
   csScope2nd: any = ['2CSA', '2CSB', '2CSC', '2CSD', '2CSE'];
   csScope3rd: any = ['3CSA', '3CSB', '3CSC', '3CSD', '3CSE'];
-  csScope4th: any = ['4CSA', '4CSB', '4CSC','4CSD'];
+  csScope4th: any = ['4CSA', '4CSB', '4CSC', '4CSD'];
   taskScopeArray!: string[];
   p: number = 1;
   email!: string;
@@ -147,7 +148,7 @@ export class DashboardComponent implements OnInit {
     public router: Router,
     public taskService: TaskService,
     private fb: FormBuilder
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.invalidDate = false;
@@ -162,6 +163,7 @@ export class DashboardComponent implements OnInit {
     console.log(new Date().getTime() - 86400000);
     console.log(new Date(+new Date() - 86400000));
 
+    this.minDate = moment(new Date()).format('YYYY-MM-DD');
     var d = new Date();
     var y = d.getFullYear();
     var n = d.getMonth();
@@ -381,7 +383,7 @@ export class DashboardComponent implements OnInit {
                 submissionLink: '',
                 displayName: data.displayName,
                 pushToken: '',
-                
+
                 term: this.term,
               };
               console.log(data.pushToken);
@@ -439,48 +441,67 @@ export class DashboardComponent implements OnInit {
   }
 
   addTask() {
-    if (this.addTaskForm.valid) {
-      if (
-        +new Date(this.addTaskForm.controls['deadline'].value).getDate() <
-        new Date().getDate()
-      ) {
-        this.invalidDate = true;
-        setTimeout(() => {
-          this.invalidDate = false;
-        }, 3000);
+    try {
+      if (this.addTaskForm.valid) {
+        /* 
+        if (
+          new Date(this.addTaskForm.controls['deadline'].value).getTime() <
+          new Date().getTime()
+        ) {
+          console.log('HIT');
+          this.invalidDate = true;
+          setTimeout(() => {
+            this.invalidDate = false;
+          }, 3000);
+          return;
+        }
+        if (
+          new Date(this.addTaskForm.controls['startsAt'].value).getTime() <
+          new Date().getTime()
+        ) {
+          console.log('HIT2');
+          this.invalidDate1 = true;
+          setTimeout(() => {
+            this.invalidDate1 = false;
+          }, 3000);
+          return;
+        } 
+        */
+        if (
+          new Date(this.addTaskForm.controls['startsAt'].value).getTime() >=
+          new Date(this.addTaskForm.controls['deadline'].value).getTime()
+        ) {
+          this.invalidDate = true;
+          setTimeout(() => {
+            this.invalidDate = false;
+          }, 3000);
+          return;
+        } else {
+          console.log(new Date(this.addTaskForm.controls['deadline'].value));
+          this.taskService
+            .addTask(
+              this.addTaskForm.controls['title'].value,
+              this.addTaskForm.controls['description'].value,
+              this.taskScopeArray,
+              new Date(this.addTaskForm.controls['startsAt'].value),
+              new Date(this.addTaskForm.controls['deadline'].value),
+              this.fsData.displayName,
+              this.taskRecipients,
+              this.userPushTokens,
+              this.term
+            )
+            .then(() => {
+              this.addTaskForm.reset();
+            });
+        }
+      } else if (this.addTaskForm.invalid) {
+        this.addTaskForm.controls['title'].markAsTouched();
+        this.addTaskForm.controls['description'].markAsTouched();
+        this.addTaskForm.controls['scope'].markAsTouched();
+        this.addTaskForm.controls['deadline'].markAsTouched();
       }
-      if (
-        +new Date(this.addTaskForm.controls['startsAt'].value).getDate() <
-        new Date().getDate()
-      ) {
-        this.invalidDate1 = true;
-        setTimeout(() => {
-          this.invalidDate1 = false;
-        }, 3000);
-      } else {
-        console.log(new Date(this.addTaskForm.controls['deadline'].value));
-        this.taskService
-          .addTask(
-            this.addTaskForm.controls['title'].value,
-            this.addTaskForm.controls['description'].value,
-            this.taskScopeArray,
-            new Date(this.addTaskForm.controls['startsAt'].value),
-            new Date(this.addTaskForm.controls['deadline'].value),
-            this.fsData.displayName,
-            this.taskRecipients,
-            this.userPushTokens,
-            this.term
-          )
-          .then(() => {
-            this.addTaskForm.reset();
-          });
-      }
-    } else if (this.addTaskForm.invalid) {
-      this.addTaskForm.controls['title'].markAsTouched();
-      this.addTaskForm.controls['description'].markAsTouched();
-      this.addTaskForm.controls['scope'].markAsTouched();
-      this.addTaskForm.controls['deadline'].markAsTouched();
-      
+    } catch (e) {
+      console.log(e);
     }
   }
 

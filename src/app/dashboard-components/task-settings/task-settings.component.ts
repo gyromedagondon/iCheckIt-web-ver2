@@ -7,6 +7,7 @@ import { TaskService } from 'src/app/services/task.service';
 import { switchMap } from 'rxjs/operators';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ToastService } from 'src/app/services/toast.service';
+import moment from 'moment';
 // modal dialog import
 @Component({
   selector: 'task-settings',
@@ -42,7 +43,7 @@ export class TaskSettingsComponent implements OnInit {
   verifyTasks$: any;
   deleteTaskForm!: any;
   deleteTaskModal!: boolean;
-
+  minDate: any;
   updateTaskForm!: any;
   updateTaskConfirm!: boolean;
 
@@ -60,6 +61,7 @@ export class TaskSettingsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.minDate = moment(new Date()).format('YYYY-MM-DD');
     var d = new Date();
     var y = d.getFullYear();
     var n = d.getMonth();
@@ -120,23 +122,25 @@ export class TaskSettingsComponent implements OnInit {
 
   public updateTask() {
     if (this.updateTaskForm.valid) {
-      this.taskService.updateTask(
-        this.taskData.recipients,
-        this.taskData.taskId,
-        this.updateTaskForm.controls['title'].value,
-        this.updateTaskForm.controls['description'].value,
-        new Date (this.updateTaskForm.controls['deadline'].value),
-      ).then(() => this.triggerUpdateTask())
-      .finally(() => this.updateTaskForm.reset())
-    }
-    else if (this.updateTaskForm.invalid) {
+      this.taskService
+        .updateTask(
+          this.taskData.recipients,
+          this.taskData.taskId,
+          this.updateTaskForm.controls['title'].value,
+          this.updateTaskForm.controls['description'].value,
+          new Date(this.updateTaskForm.controls['deadline'].value)
+        )
+        .then(() => this.triggerUpdateTask())
+        .finally(() => this.updateTaskForm.reset());
+    } else if (this.updateTaskForm.invalid) {
       this.updateTaskForm.controls['title'].markAsTouched();
       this.updateTaskForm.controls['description'].markAsTouched();
       this.updateTaskForm.controls['deadline'].markAsTouched();
 
-
-      this.toastService.publish("Please fillup all the requirements","formSuccess");
-
+      this.toastService.publish(
+        'Please fillup all the requirements',
+        'formSuccess'
+      );
     }
   }
 

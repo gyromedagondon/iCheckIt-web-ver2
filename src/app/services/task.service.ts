@@ -149,8 +149,8 @@ export class TaskService {
       recipient.title = title;
       recipient.taskId = taskId;
       recipient.description = description;
-      recipient.startsAt = +startsAt;
-      recipient.deadline = +deadline;
+      recipient.startsAt = new Date(startsAt).getTime();
+      recipient.deadline = new Date(deadline).getTime();
       recipient.uploadedBy = uploadedBy;
       recipient.attemptsLeft = 2;
       recipient.deadlineLimit = 7;
@@ -165,12 +165,12 @@ export class TaskService {
       scope: scope,
       status: 'Pending',
       createdAt: new Date().getTime(),
-      startsAt: +startsAt,
-      deadline: +deadline,
+      startsAt: new Date(startsAt).getTime(),
+      deadline: new Date(deadline).getTime(),
       uploadedBy: uploadedBy,
       recipients: recipients,
       type: 'task',
-      pushTokens: pushTokens,
+      //pushTokens: pushTokens,
       term: term,
     };
 
@@ -229,13 +229,13 @@ export class TaskService {
     newData: any,
     recipients: any
   ) {
-    return this.afs
-      .collection('tasks')
-      .doc(id)
-      .update({
-        status: 'Completed',
-      })
-      .then(() => {
+
+    try {
+
+   
+   
+         
+        /*
         oldData.forEach((element: any) => {
           return this.afs
             .collection('tasks')
@@ -244,16 +244,13 @@ export class TaskService {
               recipients: firebase.firestore.FieldValue.arrayRemove(element),
             });
         });
-
-        newData.forEach((element: any) => {
-          return this.afs
-            .collection('tasks')
-            .doc(id)
-            .update({
-              recipients: firebase.firestore.FieldValue.arrayUnion(element),
-            });
-        });
-      })
+        */
+    
+        
+      return this.afs
+      .collection('tasks')
+      .doc(id)
+      .set(newData)
       .then(() => {
         const headers = new HttpHeaders({
           'Content-Type': 'application/json',
@@ -289,7 +286,12 @@ export class TaskService {
           'taskdoesnotexist'
         );
       });
-
+    } catch (e) 
+    {
+      console.log(e);
+      this.toastService.publish('Closing of task failed: ', 'taskdoesnotexist');
+      return new Promise((resolve) => resolve("Failed to close task"))
+  }
     // return this.afs.collection('tasks').doc(id).update({
     //   status:'Completed',
     //   recipients: firebase.firestore.FieldValue.arrayRemove(oldData),
@@ -311,35 +313,40 @@ export class TaskService {
     description: any,
     deadline: Date
   ): Promise<any> {
+    try {
     return this.afs
       .collection('tasks')
       .doc(taskId)
       .update({
         title: title,
         description: description,
-        deadline: +deadline,
+        deadline: new Date(deadline).getTime(),
       })
       .then(() => {
         recipients.forEach((element: any) => {
+          console.log("SUBMITTED AT", element?.submittedAt);
           let updatedData = {
-            attemptsLeft: element.attemptsLeft,
-            createdAt: element.createdAt,
-            startsAt: +element.startsAt,
-            deadline: deadline,
-            deadlineLimit: element.deadlineLimit,
+            attemptsLeft: element?.attemptsLeft,
+            createdAt: new Date(element?.createdAt).getTime(),
+            startsAt: new Date(element?.startsAt).getTime(),
+            deadline: new Date(deadline).getTime(),
+            deadlineLimit: element?.deadlineLimit,
             description: description,
-            displayName: element.displayName,
-            email: element.email,
-            pushToken: element.pushToken,
-            section: element.section,
-            status: element.status,
-            submissionLink: element.submissionLink,
-            taskId: element.taskId,
-            term: element.term,
-            submittedAt: element.submittedAt,
+            displayName: element?.displayName,
+            email: element?.email,
+            isAccepted: element?.isAccepted,
+            //pushToken: element?.pushToken,
+            section: element?.section,
+            status: element?.status,
+            submissionLink: element?.submissionLink,
+            taskId: element?.taskId,
+            term: element?.term,
+            submittedAt: element?.submittedAt ? new Date(parseInt(element?.submittedAt)).getTime().toString() : '',
             title: title,
-            uid: element.uid,
-            uploadedBy: element.uploadedBy,
+            uid: element?.uid,
+            uploadedBy: element?.uploadedBy,
+            firstName: element?.firstName,
+            lastName: element?.lastName,
           };
           return this.afs
             .collection('tasks')
@@ -403,266 +410,284 @@ export class TaskService {
           'taskdoesnotexist'
         );
       });
+    } catch (e) {
+      console.log(e)
+
+  this.toastService.publish(
+    'Updating task failed: ' + title,
+    'taskdoesnotexist'
+  );
+
+
+      return new Promise((resolve, reject) => {
+        resolve("Failed task")
+      });
+    }
   }
 
   public updateStudentStatus(id: string, newData: any, oldData: any) {
-    console.log(newData);
-    console.log(oldData);
-    return this.afs
-      .collection('tasks')
-      .doc(id)
-      .update({
-        recipients: firebase.firestore.FieldValue.arrayRemove(oldData),
-      })
-      .then(() => {
-        this.afs
-          .collection('tasks')
-          .doc(id)
-          .update({
-            recipients: firebase.firestore.FieldValue.arrayUnion(newData),
-          });
-      })
-      .then((res) => {
-        if (newData.status == 'Pending') {
-          if (newData.pushToken == '') {
-            const headers = new HttpHeaders({
-              'Content-Type': 'application/json',
-              'Access-Control-Allow-Origin': '*',
+    try {
+      console.log(newData);
+      console.log(oldData);
+      return this.afs
+        .collection('tasks')
+        .doc(id)
+        .update({
+          recipients: firebase.firestore.FieldValue.arrayRemove(oldData),
+        })
+        .then(() => {
+          this.afs
+            .collection('tasks')
+            .doc(id)
+            .update({
+              recipients: firebase.firestore.FieldValue.arrayUnion(newData),
             });
-            const params: URLSearchParams = new URLSearchParams();
-
-            // console.log(newData.email);
-            let pushToken = newData.pushToken;
-            let email = newData.email;
-            let uploadedBy = newData.uploadedBy;
-            let title = newData.title;
-            let deadline = newData.deadline;
-            let description = newData.description;
-            let status = 'Rejected';
-            let message =
-              'Your task status has been updated to ' + status + '!';
-            let instructions =
-              'Your submission was rejected! Please re-submit your proof of completion and follow the proper instructions of the given task.';
-
-            params.set('email', email);
-            params.set('uploadedBy', uploadedBy);
-            params.set('title', title);
-            params.set('deadline', deadline);
-            params.set('description', description);
-            params.set('status', status);
-            params.set('message', message);
-            params.set('instructions', instructions);
-
-            this.http
-              .post(
-                `https://us-central1-icheckit-6a8bb.cloudfunctions.net/sendEmail`,
-                {
-                  email,
-                  uploadedBy,
-                  title,
-                  deadline,
-                  description,
-                  status,
-                  message,
-                  instructions,
-                  pushToken,
-                },
-                {
-                  headers,
-                }
-              )
-              .toPromise()
-              .then(() => {
-                this.toastService.publish(
-                  'Email has been sent to ' + email,
-                  'formSuccess'
-                );
-              })
-              .catch((err) => {
-                console.log(err);
+        })
+        .then((res) => {
+          if (newData?.status == 'Pending') {
+            if (newData?.pushToken == '') {
+              const headers = new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
               });
-          } else if (newData.pushToken != '') {
-            const headers = new HttpHeaders({
-              'Content-Type': 'application/json',
-              'Access-Control-Allow-Origin': '*',
-            });
-            const params: URLSearchParams = new URLSearchParams();
+              const params: URLSearchParams = new URLSearchParams();
 
-            // console.log(newData.email);
-            let pushToken = newData.pushToken;
-            let email = newData.email;
-            let uploadedBy = newData.uploadedBy;
-            let title = newData.title;
-            let deadline = newData.deadline;
-            let description = newData.description;
-            let status = 'Rejected';
-            let message =
-              'Your task status has been updated to ' + status + '!';
-            let instructions =
-              'Your submission was rejected! Please re-submit your proof of completion and follow the proper instructions of the given task.';
+              // console.log(newData.email);
+              let pushToken = newData?.pushToken;
+              let email = newData?.email;
+              let uploadedBy = newData?.uploadedBy;
+              let title = newData?.title;
+              let deadline = newData?.deadline;
+              let description = newData?.description;
+              let status = 'Rejected';
+              let message =
+                'Your task status has been updated to ' + status + '!';
+              let instructions =
+                'Your submission was rejected! Please re-submit your proof of completion and follow the proper instructions of the given task.';
 
-            params.set('email', email);
-            params.set('uploadedBy', uploadedBy);
-            params.set('title', title);
-            params.set('deadline', deadline);
-            params.set('description', description);
-            params.set('status', status);
-            params.set('message', message);
-            params.set('instructions', instructions);
-            params.set('pushToken', pushToken);
+              params.set('email', email);
+              params.set('uploadedBy', uploadedBy);
+              params.set('title', title);
+              params.set('deadline', deadline);
+              params.set('description', description);
+              params.set('status', status);
+              params.set('message', message);
+              params.set('instructions', instructions);
 
-            this.http
-              .post(
-                `https://us-central1-icheckit-6a8bb.cloudfunctions.net/sendEmail`,
-                {
-                  email,
-                  uploadedBy,
-                  title,
-                  deadline,
-                  description,
-                  status,
-                  message,
-                  instructions,
-                  pushToken,
-                },
-                {
-                  headers,
-                }
-              )
-              .toPromise()
-              .then(() => {
-                this.toastService.publish(
-                  'Email has been sent to ' + email,
-                  'formSuccess'
-                );
-              })
-              .catch((err) => {
-                console.log(err);
+              this.http
+                .post(
+                  `https://us-central1-icheckit-6a8bb.cloudfunctions.net/sendEmail`,
+                  {
+                    email,
+                    uploadedBy,
+                    title,
+                    deadline,
+                    description,
+                    status,
+                    message,
+                    instructions,
+                    pushToken,
+                  },
+                  {
+                    headers,
+                  }
+                )
+                .toPromise()
+                .then(() => {
+                  this.toastService.publish(
+                    'Email has been sent to ' + email,
+                    'formSuccess'
+                  );
+                })
+                .catch((err) => {
+                  console.log(err);
+                });
+            } else if (newData?.pushToken != '') {
+              const headers = new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
               });
+              const params: URLSearchParams = new URLSearchParams();
+
+              // console.log(newData.email);
+              let pushToken = newData?.pushToken;
+              let email = newData?.email;
+              let uploadedBy = newData?.uploadedBy;
+              let title = newData?.title;
+              let deadline = newData?.deadline;
+              let description = newData?.description;
+              let status = 'Rejected';
+              let message =
+                'Your task status has been updated to ' + status + '!';
+              let instructions =
+                'Your submission was rejected! Please re-submit your proof of completion and follow the proper instructions of the given task.';
+
+              params.set('email', email);
+              params.set('uploadedBy', uploadedBy);
+              params.set('title', title);
+              params.set('deadline', deadline);
+              params.set('description', description);
+              params.set('status', status);
+              params.set('message', message);
+              params.set('instructions', instructions);
+              params.set('pushToken', pushToken);
+
+              this.http
+                .post(
+                  `https://us-central1-icheckit-6a8bb.cloudfunctions.net/sendEmail`,
+                  {
+                    email,
+                    uploadedBy,
+                    title,
+                    deadline,
+                    description,
+                    status,
+                    message,
+                    instructions,
+                    pushToken,
+                  },
+                  {
+                    headers,
+                  }
+                )
+                .toPromise()
+                .then(() => {
+                  this.toastService.publish(
+                    'Email has been sent to ' + email,
+                    'formSuccess'
+                  );
+                })
+                .catch((err) => {
+                  console.log(err);
+                });
+            }
           }
-        }
 
-        if (newData.status == 'Accomplished') {
-          if (newData.pushToken == '') {
-            const headers = new HttpHeaders({
-              'Content-Type': 'application/json',
-              'Access-Control-Allow-Origin': '*',
-            });
-            const params: URLSearchParams = new URLSearchParams();
-            // console.log(newData.email);
-            let pushToken = newData.pushToken;
-            let email = newData.email;
-            let uploadedBy = newData.uploadedBy;
-            let title = newData.title;
-            let deadline = newData.deadline;
-            let description = newData.description;
-            let status = newData.status;
-            let message =
-              'Your task status has been updated to ' + status + '!';
-            let instructions =
-              'Your submission was approved! Visit the mobile app to view your accomplished submission.';
-
-            params.set('email', email);
-            params.set('uploadedBy', uploadedBy);
-            params.set('title', title);
-            params.set('deadline', deadline);
-            params.set('description', description);
-            params.set('status', status);
-            params.set('message', message);
-            params.set('instructions', instructions);
-
-            this.http
-              .post(
-                `https://us-central1-icheckit-6a8bb.cloudfunctions.net/sendEmail`,
-                {
-                  email,
-                  uploadedBy,
-                  title,
-                  deadline,
-                  description,
-                  status,
-                  message,
-                  instructions,
-                  pushToken,
-                },
-                {
-                  headers,
-                }
-              )
-              .toPromise()
-              .then(() => {
-                this.toastService.publish(
-                  'Email has been sent to ' + email,
-                  'formSuccess'
-                );
-              })
-              .catch((err) => {
-                console.log(err);
+          if (newData?.status == 'Accomplished') {
+            if (newData?.pushToken == '') {
+              const headers = new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
               });
-          } else if (newData.pushToken != '') {
-            const headers = new HttpHeaders({
-              'Content-Type': 'application/json',
-              'Access-Control-Allow-Origin': '*',
-            });
-            const params: URLSearchParams = new URLSearchParams();
+              const params: URLSearchParams = new URLSearchParams();
+              // console.log(newData.email);
+              let pushToken = newData?.pushToken;
+              let email = newData?.email;
+              let uploadedBy = newData?.uploadedBy;
+              let title = newData?.title;
+              let deadline = newData?.deadline;
+              let description = newData?.description;
+              let status = newData?.status;
+              let message =
+                'Your task status has been updated to ' + status + '!';
+              let instructions =
+                'Your submission was approved! Visit the mobile app to view your accomplished submission.';
 
-            // console.log(newData.email);
-            let pushToken = newData.pushToken;
-            let email = newData.email;
-            let uploadedBy = newData.uploadedBy;
-            let title = newData.title;
-            let deadline = newData.deadline;
-            let description = newData.description;
-            let status = newData.status;
-            let message =
-              'Your task status has been updated to ' + status + '!';
-            let instructions =
-              'Your submission was approved! Visit the mobile app to view your accomplished submission.';
+              params.set('email', email);
+              params.set('uploadedBy', uploadedBy);
+              params.set('title', title);
+              params.set('deadline', deadline);
+              params.set('description', description);
+              params.set('status', status);
+              params.set('message', message);
+              params.set('instructions', instructions);
 
-            params.set('email', email);
-            params.set('uploadedBy', uploadedBy);
-            params.set('title', title);
-            params.set('deadline', deadline);
-            params.set('description', description);
-            params.set('status', status);
-            params.set('message', message);
-            params.set('instructions', instructions);
-            params.set('pushToken', pushToken);
-
-            this.http
-              .post(
-                `https://us-central1-icheckit-6a8bb.cloudfunctions.net/sendEmail`,
-                {
-                  email,
-                  uploadedBy,
-                  title,
-                  deadline,
-                  description,
-                  status,
-                  message,
-                  instructions,
-                  pushToken,
-                },
-                {
-                  headers,
-                }
-              )
-              .toPromise()
-              .then(() => {
-                this.toastService.publish(
-                  'Email has been sent to ' + email,
-                  'formSuccess'
-                );
-              })
-              .catch((err) => {
-                console.log(err);
+              this.http
+                .post(
+                  `https://us-central1-icheckit-6a8bb.cloudfunctions.net/sendEmail`,
+                  {
+                    email,
+                    uploadedBy,
+                    title,
+                    deadline,
+                    description,
+                    status,
+                    message,
+                    instructions,
+                    pushToken,
+                  },
+                  {
+                    headers,
+                  }
+                )
+                .toPromise()
+                .then(() => {
+                  this.toastService.publish(
+                    'Email has been sent to ' + email,
+                    'formSuccess'
+                  );
+                })
+                .catch((err) => {
+                  console.log(err);
+                });
+            } else if (newData?.pushToken != '') {
+              const headers = new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
               });
+              const params: URLSearchParams = new URLSearchParams();
+
+              // console.log(newData.email);
+              let pushToken = newData?.pushToken;
+              let email = newData?.email;
+              let uploadedBy = newData?.uploadedBy;
+              let title = newData?.title;
+              let deadline = newData?.deadline;
+              let description = newData?.description;
+              let status = newData?.status;
+              let message =
+                'Your task status has been updated to ' + status + '!';
+              let instructions =
+                'Your submission was approved! Visit the mobile app to view your accomplished submission.';
+
+              params.set('email', email);
+              params.set('uploadedBy', uploadedBy);
+              params.set('title', title);
+              params.set('deadline', deadline);
+              params.set('description', description);
+              params.set('status', status);
+              params.set('message', message);
+              params.set('instructions', instructions);
+              params.set('pushToken', pushToken);
+
+              this.http
+                .post(
+                  `https://us-central1-icheckit-6a8bb.cloudfunctions.net/sendEmail`,
+                  {
+                    email,
+                    uploadedBy,
+                    title,
+                    deadline,
+                    description,
+                    status,
+                    message,
+                    instructions,
+                    pushToken,
+                  },
+                  {
+                    headers,
+                  }
+                )
+                .toPromise()
+                .then(() => {
+                  this.toastService.publish(
+                    'Email has been sent to ' + email,
+                    'formSuccess'
+                  );
+                })
+                .catch((err) => {
+                  console.log(err);
+                });
+            }
           }
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } catch (e) {
+      console.log(e);
+      return;
+    }
   }
 
   public updateMultipleStudentStatus(id: string, newData: any, oldData: any) {
@@ -685,8 +710,8 @@ export class TaskService {
               });
           })
           .then((res) => {
-            if (element.status == 'Pending') {
-              if (element.pushToken == '') {
+            if (element?.status == 'Pending') {
+              if (element?.pushToken == '') {
                 const headers = new HttpHeaders({
                   'Content-Type': 'application/json',
                   'Access-Control-Allow-Origin': '*',
@@ -694,11 +719,11 @@ export class TaskService {
                 const params: URLSearchParams = new URLSearchParams();
 
                 // console.log(newData.email);
-                let email = element.email;
-                let uploadedBy = element.uploadedBy;
-                let title = element.title;
-                let deadline = element.deadline;
-                let description = element.description;
+                let email = element?.email;
+                let uploadedBy = element?.uploadedBy;
+                let title = element?.title;
+                let deadline = element?.deadline;
+                let description = element?.description;
                 let status = 'Rejected';
                 let message =
                   'Your task status has been updated to ' + status + '!';
@@ -746,12 +771,12 @@ export class TaskService {
                 const params: URLSearchParams = new URLSearchParams();
 
                 // console.log(newData.email);
-                let pushToken = element.pushToken;
-                let email = element.email;
-                let uploadedBy = element.uploadedBy;
-                let title = element.title;
-                let deadline = element.deadline;
-                let description = element.description;
+                let pushToken = element?.pushToken;
+                let email = element?.email;
+                let uploadedBy = element?.uploadedBy;
+                let title = element?.title;
+                let deadline = element?.deadline;
+                let description = element?.description;
                 let status = 'Rejected';
                 let message =
                   'Your task status has been updated to ' + status + '!';
@@ -805,12 +830,12 @@ export class TaskService {
                 const params: URLSearchParams = new URLSearchParams();
 
                 // console.log(newData.email);
-                let email = element.email;
-                let uploadedBy = element.uploadedBy;
-                let title = element.title;
-                let deadline = element.deadline;
-                let description = element.description;
-                let status = element.status;
+                let email = element?.email;
+                let uploadedBy = element?.uploadedBy;
+                let title = element?.title;
+                let deadline = element?.deadline;
+                let description = element?.description;
+                let status = element?.status;
                 let message =
                   'Your task status has been updated to ' + status + '!';
                 let instructions =
@@ -857,18 +882,18 @@ export class TaskService {
                 const params: URLSearchParams = new URLSearchParams();
 
                 // console.log(newData.email);
-                let pushToken = element.pushToken;
-                let email = element.email;
-                let uploadedBy = element.uploadedBy;
-                let title = element.title;
-                let deadline = element.deadline;
-                let description = element.description;
-                let status = element.status;
+                let pushToken = element?.pushToken;
+                let email = element?.email;
+                let uploadedBy = element?.uploadedBy;
+                let title = element?.title;
+                let deadline = element?.deadline;
+                let description = element?.description;
+                let status = element?.status;
                 let message =
                   'Your task status has been updated to ' + status + '!';
                 let instructions =
                   'Your submission was approved! Visit the mobile app to view your accomplished submission.';
-                submittedAt: element.submittedAt, params.set('email', email);
+                submittedAt: element?.submittedAt, params.set('email', email);
                 params.set('uploadedBy', uploadedBy);
                 params.set('title', title);
                 params.set('deadline', deadline);

@@ -60,9 +60,9 @@
             </div>
             <!-- Task Deadline here -->
             <h2 class="text-2xl mt-4">Task Deadline</h2>
-            <input type="text" placeholder="{{task.deadline | date}}" id="deadline" class="taskScope-textfield"
+            <input  type="text" placeholder="{{task.deadline | date}}" id="deadline" class="taskScope-textfield"
               value="{{task.deadline | date}}" readonly />
-            <input type="date" id="deadline" name="deadline" value="{{task.deadline}}" formControlName="deadline">
+            <input type="date"  min="{{minDate}}" id="deadline" name="deadline" value="{{task.deadline}}" formControlName="deadline">
             <div class="login-form-error"
               *ngIf="updateTaskForm.controls.deadline.errors?.required && updateTaskForm.controls.deadline.touched">Task
               deadline is required

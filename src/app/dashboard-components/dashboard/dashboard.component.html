@@ -210,7 +210,7 @@
               <label for="deadline">
                 Task Start Date:
               </label>
-              <input type="date" id="startsAt" name="startsAt" formControlName="startsAt">
+              <input min="{{minDate}}" type="date" id="startsAt" name="startsAt" formControlName="startsAt">
             </div>
             <div class="login-form-error"
                  *ngIf="addTaskForm.controls.startsAt.errors?.required && addTaskForm.controls.startsAt.touched">
@@ -219,14 +219,14 @@
             </div>
             <div class="login-form-error"
                  *ngIf="invalidDate">
-              Task start date error. Cannot be a date that has passed.
+               Task deadline error. End date must be earlier than start.
             </div>
 
             <div class="mb-4">
               <label for="deadline">
                 Task Deadline
               </label>
-              <input type="date" id="deadline" name="deadline" formControlName="deadline">
+              <input type="date" min="{{minDate}}" id="deadline" name="deadline" formControlName="deadline">
             </div>
             <div class="login-form-error"
                  *ngIf="addTaskForm.controls.deadline.errors?.required && addTaskForm.controls.deadline.touched">
@@ -234,8 +234,8 @@
               is required.
             </div>
             <div class="login-form-error"
-                 *ngIf="invalidDate">
-              Task deadline error. Cannot be a date that has passed.
+                 *ngIf="invalidDate == true">
+              Task deadline error. End date must be earlier than start.
             </div>
 
             <!-- <div class="login-form-error" *ngIf="createStudentForm.controls.email.errors?.required && createStudentForm.controls.email.touched">

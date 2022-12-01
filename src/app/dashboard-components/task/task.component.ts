@@ -109,19 +109,18 @@ export class TaskComponent implements OnInit {
         })
       )
       .subscribe((res) => {
-         res.recipients = res.recipients.map((user: any) => {
-           if (user?.firstName && user?.lastName) {
-             return {
-               ...user,
-               displayName: user?.firstName + ' ' + user?.lastName,
-             };
-           } else {
-             return user;
-           }
-         });
+        res.recipients = res.recipients.map((user: any) => {
+          if (user?.firstName && user?.lastName) {
+            return {
+              ...user,
+              displayName: user?.firstName + ' ' + user?.lastName,
+            };
+          } else {
+            return user;
+          }
+        });
         this.taskData = res;
 
-       
         console.log('TASK DATA', res);
         this.totalRecipients = res.recipients.length;
 
@@ -209,6 +208,57 @@ export class TaskComponent implements OnInit {
         this.toastService.publish('Failed to download submission', 'formError');
       });
   }
+
+  public revampedBulkdDownload = () => {
+    try {
+      console.log('DOWNLOAD START');
+      const title = this.taskData.title + ' Submissions';
+      const zip = new JSZip();
+
+      let submissions = this.taskData.recipients.map((student: any) => {
+        if (student?.submissionLink && student?.status == 'Accomplished') {
+          let studentFolder = zip.folder(
+            student?.section +
+              '_' +
+              student?.lastName +
+              ', ' +
+              student?.firstName
+          );
+
+          let bufferContent = this.download(
+            student?.submissionLink,
+            studentFolder
+          );
+
+          return bufferContent;
+        } else {
+          return null;
+        }
+      });
+
+      submissions = submissions.filter((el: any) => el != null);
+
+      if (submissions.length <= 0) {
+        this.toastService.publish('No student submissions found', 'formError');
+        return;
+      }
+
+      //ZIP ALL TO ONE
+
+      console.log(submissions);
+
+      Promise.all(submissions).then(() => {
+        zip.generateAsync({ type: 'blob' }).then(function (content) {
+          saveAs(content, title);
+        });
+      });
+    } catch (e) {
+      console.log(e);
+      this.toastService.publish('Error on bulk downloading files', 'formError');
+      return e?.toString();
+    }
+  };
+
   public bulkDownloadSubmission = () => {
     console.log('DOWNLOADING...');
     const title = this.taskData.title + ' Submissions';
@@ -252,7 +302,7 @@ export class TaskComponent implements OnInit {
           );
           return student.url.map((url: any, idx: any) => {
             console.log('URL', url);
-            return this.download(url?.url, idx, url?.filename, studentFolder);
+            return this.download(url?.url, studentFolder);
           });
         });
 
@@ -269,7 +319,7 @@ export class TaskComponent implements OnInit {
         const files = this.submissionUrls.map((student: any) => {
           const studentFolder = zip.folder(student.studentId);
           return student.url.map((url: any, idx: any) => {
-            return this.download(url, idx, student.studentId, studentFolder);
+            return this.download(url, studentFolder);
           });
         });
 
@@ -288,12 +338,7 @@ export class TaskComponent implements OnInit {
     }
   };
 
-  public download = async (
-    url: any,
-    idx: any,
-    filename: any,
-    studentFolder: any
-  ) => {
+  public download = async (url: any, studentFolder: any) => {
     return axios.get(url, { responseType: 'blob' }).then((resp) => {
       console.log('RESP', resp);
       console.log('RESPONSE from download', resp.data);
@@ -440,6 +485,7 @@ export class TaskComponent implements OnInit {
         firstName: element?.firstName,
         lastName: element?.lastName,
         //pushToken: element.pushToken,
+        isAccepted: false,
         section: element?.section,
         status: 'Pending',
         submissionLink: element?.submissionLink,
@@ -507,7 +553,6 @@ export class TaskComponent implements OnInit {
       accomplishedData,
       recipient
     );
-    
   }
   public triggerDeleteTaskModal() {
     this.deleteTaskModal = !this.deleteTaskModal;
@@ -523,7 +568,8 @@ export class TaskComponent implements OnInit {
       displayName: recipient?.displayName,
       email: recipient?.email,
       section: recipient?.section,
-      pushToken: recipient?.pushToken,
+      //pushToken: recipient?.pushToken,
+      isAccepted: false,
       status: 'Pending',
       submissionLink: '',
       taskId: recipient?.taskId,
@@ -536,10 +582,13 @@ export class TaskComponent implements OnInit {
       deadlineLimit: recipient?.deadlineLimit,
     };
     console.log(recipient?.submissionLink);
-    this.storage
-      .refFromURL(recipient?.submissionLink)
-      .delete()
-      .subscribe((res) => console.log(res));
+
+    if (recipient?.submissionLink) {
+      this.storage
+        .refFromURL(recipient?.submissionLink)
+        .delete()
+        .subscribe((res) => console.log(res));
+    }
 
     this.taskService.updateStudentStatus(
       this.taskData.taskId,
@@ -602,43 +651,97 @@ export class TaskComponent implements OnInit {
   public closeAllSubmission() {
     let oldData: any[] = [];
     let acceptedSubmissions: any[] = [];
-    this.taskData.recipients.forEach((element: any) => {
-      if (Object.values(element).includes('Pending')) {
-        oldData.push(element);
-      }
-      if (Object.values(element).includes('No Submission')) {
-        oldData.push(element);
+    oldData = this.taskData.recipients.map((element: any) => {
+      if (element?.status == 'Pending') {
+        return {
+          ...element,
+          createdAt: new Date(element?.createdAt).getTime(),
+          startsAt: new Date(element?.startsAt).getTime(),
+          deadline: new Date(element?.deadline).getTime(),
+          status: 'No Submission',
+          submissionLink: '',
+          isAccepted: false,
+        };
+      } else if (element?.status == 'No Submission') {
+        return {
+          ...element,
+          createdAt: new Date(element?.createdAt).getTime(),
+          startsAt: new Date(element?.startsAt).getTime(),
+          deadline: new Date(element?.deadline).getTime(),
+          status: 'No Submission',
+          submissionLink: '',
+          isAccepted: false,
+        };
+      } else {
+        return null;
       }
     });
 
+    oldData = oldData.filter((el) => el != null);
+    console.log('ALL ACCEPTED', oldData);
+
+    let allAccepted = this.taskData.recipients.map((element: any) => {
+      if (element?.status == 'For Approval') {
+        return {
+          ...element,
+          isAccepted: true,
+          submittedAt: new Date().getTime().toString(),
+          status: 'Accomplished',
+        };
+      } else if (element?.status == 'Accomplished') {
+        return element;
+      } else {
+        return null;
+      }
+    });
+
+    console.log('ALL ACCEPTED', allAccepted);
+
+    allAccepted = allAccepted.filter((el: any) => el != null);
+    /*
     oldData.forEach((element: any) => {
       let updatedData = {
-        createdAt: element.createdAt,
-        startsAt: element.startsAt,
-        deadline: element.deadline,
-        description: element.description,
-        displayName: element.displayName,
-        email: element.email,
-        pushToken: element.pushToken,
-        section: element.section,
+        createdAt: new Date(element?.createdAt).getTime(),
+        startsAt: new Date(element?.startsAt).getTime(),
+        deadline: new Date(element?.deadline).getTime(),
+        description: element?.description,
+        displayName: element?.displayName,
+        email: element?.email,
+        //pushToken: element?.pushToken,
+        isAccepted: false,
+        section: element?.section,
         status: 'No Submission',
-        submissionLink: element.submissionLink,
-        taskId: element.taskId,
-        title: element.title,
-        uid: element.uid,
-        uploadedBy: element.uploadedBy,
-        term: element.term,
-        attemptsLeft: element.attemptsLeft,
+        submissionLink: element?.submissionLink,
+        taskId: element?.taskId,
+        title: element?.title,
+        uid: element?.uid,
+        uploadedBy: element?.uploadedBy,
+        term: element?.term,
+        attemptsLeft: element?.attemptsLeft,
         deadlineLimit: 0,
+        firstName: element?.firstName,
+        lastName: element?.lastName,
       };
       acceptedSubmissions.push(updatedData);
     });
+    */
     console.log(acceptedSubmissions);
+
+    acceptedSubmissions = acceptedSubmissions.concat(oldData);
+    acceptedSubmissions = acceptedSubmissions.concat(allAccepted);
+
+    console.log('ACCEPTED', acceptedSubmissions);
+
+    let newTask = {
+      ...this.taskData,
+      recipients: acceptedSubmissions,
+      status: "Completed"
+    };
     this.taskService
       .closeSubmissions(
         this.taskData.taskId,
         oldData,
-        acceptedSubmissions,
+        newTask,
         this.taskData.recipients
       )
       .then(() => {
