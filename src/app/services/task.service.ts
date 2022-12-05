@@ -323,30 +323,42 @@ export class TaskService {
         deadline: new Date(deadline).getTime(),
       })
       .then(() => {
+        console.log('RES', recipients);
+        console.log('PARAMS', taskId, title, description, deadline);
         recipients.forEach((element: any) => {
-          console.log("SUBMITTED AT", element?.submittedAt);
+          console.log('SUBMITTED AT', element?.submittedAt);
           let updatedData = {
-            attemptsLeft: element?.attemptsLeft,
-            createdAt: new Date(element?.createdAt).getTime(),
-            startsAt: new Date(element?.startsAt).getTime(),
-            deadline: new Date(deadline).getTime(),
-            deadlineLimit: element?.deadlineLimit,
-            description: description,
-            displayName: element?.displayName,
-            email: element?.email,
-            isAccepted: element?.isAccepted,
+            attemptsLeft: element?.attemptsLeft ? element?.attemptsLeft : 2,
+            createdAt: new Date(element?.createdAt).getTime()
+              ? new Date(element?.createdAt).getTime()
+              : 0,
+            startsAt: new Date(element?.startsAt).getTime()
+              ? new Date(element?.startsAt).getTime()
+              : 0,
+            deadline: new Date(deadline).getTime()
+              ? new Date(deadline).getTime()
+              : 0,
+            deadlineLimit: element?.deadlineLimit ? element?.deadlineLimit : 7,
+            description: description ? description : '',
+            displayName: element?.displayName ? element?.displayName : '',
+            email: element?.email ? element?.email : '',
+            isAccepted: element?.isAccepted ? element?.isAccepted : false,
             //pushToken: element?.pushToken,
-            section: element?.section,
-            status: element?.status,
-            submissionLink: element?.submissionLink,
-            taskId: element?.taskId,
-            term: element?.term,
-            submittedAt: element?.submittedAt ? new Date(parseInt(element?.submittedAt)).getTime().toString() : '',
-            title: title,
-            uid: element?.uid,
-            uploadedBy: element?.uploadedBy,
-            firstName: element?.firstName,
-            lastName: element?.lastName,
+            section: element?.section ? element?.section : '',
+            status: element?.status ? element?.status : '',
+            submissionLink: element?.submissionLink
+              ? element?.submissionLink
+              : '',
+            taskId: element?.taskId ? element?.taskId : '',
+            term: element?.term ? element?.term : '',
+            submittedAt: element?.submittedAt
+              ? new Date(parseInt(element?.submittedAt)).getTime().toString()
+              : '',
+            title: title ? title : '',
+            uid: element?.uid ? element?.uid : '',
+            uploadedBy: element?.uplodedBy ? element?.uploadedBy : '',
+            firstName: element?.firstName ? element?.firstName : '',
+            lastName: element?.lastName ? element?.lastName : '',
           };
           return this.afs
             .collection('tasks')
@@ -404,7 +416,8 @@ export class TaskService {
       .then(() => {
         this.router.navigate(['task/', taskId]);
       })
-      .catch(() => {
+      .catch((e) => {
+        console.log(e);
         this.toastService.publish(
           'Updating task failed: ' + title,
           'taskdoesnotexist'
