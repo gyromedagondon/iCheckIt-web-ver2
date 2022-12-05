@@ -1,5 +1,5 @@
 <app-navbar></app-navbar><!-- NAVBAR -->
-<div class="h-full bg-ust-back bg-cover bg-no-repeat main-container" *ngIf="fsData as user">
+<div class="min-h-screen h-full bg-ust-back bg-cover bg-no-repeat main-container" *ngIf="fsData as user">
   <!-- MAIN CONTAINER LAGI NYONG LAGYAN NITO -->
   <div class="bg-cover bg-no-repeat main-title bg-center main-title" *ngIf="taskData as task">
     <div class="p-6 main-title-text text-white flex">
@@ -55,6 +55,7 @@
           </div>
         </div>
 
+        <!--
         <div class="relative flex flex-col items-center justify-center group">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"
                (click)="triggerDeleteTaskModal()">
@@ -66,7 +67,7 @@
             <div class="w-3 h-3 -mt-2 rotate-45 bg-black"></div>
           </div>
         </div>
-
+-->
         
 
 

@@ -57,7 +57,7 @@
   cursor: pointer;
 } */
 .admin-container-children {
-  @apply flex p-2 w-full items-center justify-start shadow-md;
+  @apply flex p-2 w-full items-center justify-start shadow-md  bg-white;
   transition: 0.15s all ease-in-out;
   margin-bottom: 1.5px;
   font-family: "Antonio", sans-serif;
@@ -216,7 +216,6 @@
 
 .main-title {
   background-blend-mode: soft-light;
-  background-color: #7d1d2d;
 }
 
 .title {
@@ -234,4 +233,10 @@
 
 .antonio {
     font-family: Antonio;
+}
+
+.main-container {
+  @apply h-full;
+  background-blend-mode: soft-light ;
+  background-color: #7f1d1d;
 }
