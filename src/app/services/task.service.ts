@@ -170,7 +170,7 @@ export class TaskService {
       uploadedBy: uploadedBy,
       recipients: recipients,
       type: 'task',
-      //pushTokens: pushTokens,
+      pushTokens: pushTokens,
       term: term,
     };
 
@@ -343,7 +343,7 @@ export class TaskService {
             displayName: element?.displayName ? element?.displayName : '',
             email: element?.email ? element?.email : '',
             isAccepted: element?.isAccepted ? element?.isAccepted : false,
-            //pushToken: element?.pushToken,
+            pushToken: element?.pushToken,
             section: element?.section ? element?.section : '',
             status: element?.status ? element?.status : '',
             submissionLink: element?.submissionLink
