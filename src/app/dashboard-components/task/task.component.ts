@@ -114,9 +114,10 @@ export class TaskComponent implements OnInit {
             return {
               ...user,
               displayName: user?.firstName + ' ' + user?.lastName,
+              submittedAtCopy: new Date(parseInt(user?.submittedAt)).getTime(),
             };
           } else {
-            return user;
+            return { ...user, submittedAtCopy: new Date(parseInt(user?.submittedAt)).getTime() };
           }
         });
         this.taskData = res;
@@ -529,8 +530,8 @@ export class TaskComponent implements OnInit {
       deadline: new Date(recipient?.deadline).getTime(),
       description: recipient?.description,
       displayName: recipient?.displayName,
-      lastName: recipient?.lastName,
-      firstName: recipient?.firstName,
+      lastName: recipient?.lastName ? recipient?.lastName : '',
+      firstName: recipient?.firstName ? recipient?.firstName : '',
       email: recipient?.email,
       section: recipient?.section,
       pushToken: recipient?.pushToken,
@@ -652,7 +653,7 @@ export class TaskComponent implements OnInit {
     let oldData: any[] = [];
     let acceptedSubmissions: any[] = [];
     oldData = this.taskData.recipients.map((element: any) => {
-      if (element?.status == 'Pending') {
+      if (element?.status == 'Pending' || element?.status == 'Late') {
         return {
           ...element,
           createdAt: new Date(element?.createdAt).getTime(),

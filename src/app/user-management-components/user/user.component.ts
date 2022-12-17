@@ -34,12 +34,18 @@ export class UserComponent implements OnInit {
     '1ITF',
     '1ITG',
     '1ITH',
+    '1ITI',
+    '1ITJ',
     '2ITA',
     '2ITB',
     '2ITC',
     '2ITD',
     '2ITE',
     '2ITF',
+    '2ITG',
+    '2ITH',
+    '2ITI',
+    '2ITJ',
     '3ITA',
     '3ITB',
     '3ITC',
@@ -58,6 +64,8 @@ export class UserComponent implements OnInit {
     '4ITF',
     '4ITG',
     '4ITH',
+    '4ITI',
+    '4ITJ',
   ];
   itSection: any = [
     '1ITA',
@@ -68,12 +76,18 @@ export class UserComponent implements OnInit {
     '1ITF',
     '1ITG',
     '1ITH',
+    '1ITI',
+    '1ITJ',
     '2ITA',
     '2ITB',
     '2ITC',
     '2ITD',
     '2ITE',
     '2ITF',
+    '2ITG',
+    '2ITH',
+    '2ITI',
+    '2ITJ',
     '3ITA',
     '3ITB',
     '3ITC',
@@ -92,27 +106,38 @@ export class UserComponent implements OnInit {
     '4ITF',
     '4ITG',
     '4ITH',
+    '4ITI',
+    '4ITJ',
   ];
   csSection: any = [
     '1CSA',
     '1CSB',
     '1CSC',
+    '1CSD',
+    '1CSE',
     '2CSA',
     '2CSB',
     '2CSC',
+    '2CSD',
+    '2CSE',
     '3CSA',
     '3CSB',
     '3CSC',
     '3CSD',
+    '3CDE',
     '4CSA',
     '4CSB',
     '4CSC',
+    '4CSD',
+    '4CSE',
   ];
   isSection: any = [
     '1ISA',
     '1ISB',
+    '1ISC',
     '2ISA',
     '2ISB',
+    '2ISC',
     '3ISA',
     '3ISB',
     '3ISC',
@@ -181,7 +206,7 @@ export class UserComponent implements OnInit {
         })
       )
       .subscribe((res) => {
-        console.log("TARGET STUDENT", res);
+        console.log('TARGET STUDENT', res);
 
         let final = {};
         if (res?.firstName && res?.lastName) {
@@ -253,8 +278,6 @@ export class UserComponent implements OnInit {
       section: ['', Validators.required],
       yearGraduated: ['', Validators.required],
     });
-
-   
   }
 
   public triggerDeleteModal() {
@@ -266,11 +289,10 @@ export class UserComponent implements OnInit {
   }
 
   public triggerEditUserModal() {
-
-    
     this.editUserModal = !this.editUserModal;
     if (this.student) {
-      const displayName = this.student?.firstName + ' ' + this.student?.lastName;
+      const displayName =
+        this.student?.firstName + ' ' + this.student?.lastName;
       this.editUserForm.controls.firstName.setValue(this.student?.firstName);
       this.editUserForm.controls.lastName.setValue(this.student?.lastName);
       //this.editUserForm.controls.displayName.setValue(displayName);

@@ -24,10 +24,19 @@ export class DashboardComponent implements OnInit {
     '1ITE',
     '1ITF',
     '1ITG',
+    '1ITH',
+    '1ITI',
+    '1ITJ',
     '2ITA',
     '2ITB',
     '2ITC',
     '2ITD',
+    '2ITE',
+    '2ITF',
+    '2ITG',
+    '2ITH',
+    '2ITI',
+    '2ITJ',
     '3ITA',
     '3ITB',
     '3ITC',
@@ -46,9 +55,33 @@ export class DashboardComponent implements OnInit {
     '4ITF',
     '4ITG',
     '4ITH',
+    '4ITI',
+    '4ITJ',
   ];
-  itScope1st: any = ['1ITA', '1ITB', '1ITC', '1ITD', '1ITE', '1ITF', '1ITG'];
-  itScope2nd: any = ['2ITA', '2ITB', '2ITC', '2ITD'];
+  itScope1st: any = [
+    '1ITA',
+    '1ITB',
+    '1ITC',
+    '1ITD',
+    '1ITE',
+    '1ITF',
+    '1ITG',
+    '1ITH',
+    '1ITI',
+    '1ITJ',
+  ];
+  itScope2nd: any = [
+    '2ITA',
+    '2ITB',
+    '2ITC',
+    '2ITD',
+    '2ITE',
+    '2ITF',
+    '2ITG',
+    '2ITH',
+    '2ITI',
+    '2ITJ',
+  ];
   itScope3rd: any = [
     '3ITA',
     '3ITB',
@@ -76,17 +109,21 @@ export class DashboardComponent implements OnInit {
   isScope: any = [
     '1ISA',
     '1ISB',
+    '1ISC',
     '2ISA',
     '2ISB',
+    '2ISC',
     '3ISA',
     '3ISB',
+    '3ISC',
     '4ISA',
     '4ISB',
+    '4ISC',
   ];
-  isScope1st: any = ['1ISA', '1ISB', '1ISC', '1SD', '1ISE'];
-  isScope2nd: any = ['2ISA', '2ISB', '2ISC', '2ISD', '2ISE'];
-  isScope3rd: any = ['3ISA', '3ISB', '3ISC', '3ISD', '3ISE'];
-  isScope4th: any = ['4ISA', '4ISB', '4ISC', '4ISD', '4ISE'];
+  isScope1st: any = ['1ISA', '1ISB', '1ISC'];
+  isScope2nd: any = ['2ISA', '2ISB', '2ISC'];
+  isScope3rd: any = ['3ISA', '3ISB', '3ISC'];
+  isScope4th: any = ['4ISA', '4ISB', '4ISC'];
   csScope: any = [
     '1CSA',
     '1CSB',
@@ -107,11 +144,12 @@ export class DashboardComponent implements OnInit {
     '4CSB',
     '4CSC',
     '4CSD',
+    '4CSE',
   ];
   csScope1st: any = ['1CSA', '1CSB', '1CSC', '1CSD', '1CSE'];
   csScope2nd: any = ['2CSA', '2CSB', '2CSC', '2CSD', '2CSE'];
   csScope3rd: any = ['3CSA', '3CSB', '3CSC', '3CSD', '3CSE'];
-  csScope4th: any = ['4CSA', '4CSB', '4CSC', '4CSD'];
+  csScope4th: any = ['4CSA', '4CSB', '4CSC', '4CSD', '4CSE'];
   taskScopeArray!: string[];
   p: number = 1;
   email!: string;
@@ -135,6 +173,8 @@ export class DashboardComponent implements OnInit {
     section: any;
     submissionLink: string;
     displayName: any;
+    lastName: any;
+    firstName: any;
   }[] = [];
   userPushTokens: { pushToken: string }[] = [];
   term!: string;
@@ -382,6 +422,8 @@ export class DashboardComponent implements OnInit {
                 section: data.section,
                 submissionLink: '',
                 displayName: data.displayName,
+                lastName: data?.lastName,
+                firstName: data?.firstName,
                 pushToken: '',
 
                 term: this.term,
@@ -412,6 +454,8 @@ export class DashboardComponent implements OnInit {
                 section: data.section,
                 submissionLink: '',
                 displayName: data.displayName,
+                lastName: data?.lastName,
+                firstName: data?.firstName,
                 term: this.term,
               };
               console.log(data.pushToken);

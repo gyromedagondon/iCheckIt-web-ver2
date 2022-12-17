@@ -212,16 +212,24 @@
             <span class="recipient-forApproval">{{ recipient.status }}</span>
           </p>
         </div>
-        <p *ngIf="recipient.status == 'No Submission'">
+        <p *ngIf="recipient.status == 'No Submission' ">
           Status: <span class="recipient-late">{{ recipient.status }}</span>
         </p>
         <p *ngIf="recipient.status == 'Pending'">
           Status: <span class="recipient-pending">{{ recipient.status }}</span>
+        </p>  
+         <p *ngIf="recipient.status == 'Late'">
+          Status: <span class="text-red-400">{{ recipient.status }}</span>
         </p>
-        <p *ngIf="recipient.status == 'Accomplished'">
+        <p *ngIf="recipient.status == 'Accomplished' && recipient.submittedAtCopy <= recipient.deadline">
           Status:
           <span class="recipient-accomplished">{{ recipient.status }}</span>
         </p>
+        <p *ngIf="recipient.status == 'Accomplished' && recipient.submittedAtCopy >= recipient.deadline">
+          Status:
+          <span class="text-[#F25A1D]">Accomplished Late</span>
+        </p>
+        
 
         <p *ngIf="recipient.status == 'Accomplished'" class="ml-10" (click)="downloadOne(recipient.submissionLink)">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">

@@ -98,8 +98,7 @@ export class UserManagementComponent implements OnInit {
     '3ITB',
     '3ITC',
     '3ITD',
-    '3ITF',
-    '3ITG',
+    '3ITE',
     '3ITF',
     '3ITG',
     '3ITH',
@@ -128,7 +127,18 @@ export class UserManagementComponent implements OnInit {
     '1ITI',
     '1ITJ',
   ];
-  itScope2nd: any = ['2ITA', '2ITB', '2ITC', '2ITD'];
+  itScope2nd: any = [
+    '2ITA',
+    '2ITB',
+    '2ITC',
+    '2ITD',
+    '2ITE',
+    '2ITF',
+    '2ITG',
+    '2ITH',
+    '2ITI',
+    '2ITJ',
+  ];
   itScope3rd: any = [
     '3ITA',
     '3ITB',
@@ -158,32 +168,44 @@ export class UserManagementComponent implements OnInit {
     '1CSA',
     '1CSB',
     '1CSC',
+    '1CSD',
+    '1CSE',
     '2CSA',
     '2CSB',
     '2CSC',
+    '2CSD',
+    '2CSE',
     '3CSA',
     '3CSB',
     '3CSC',
     '3CSD',
+    '3CDE',
     '4CSA',
     '4CSB',
+    '4CSC',
+    '4CSD',
+    '4CSE',
   ];
-  csScope1st: any = ['1CSA', '1CSB', '1CSC'];
-  csScope2nd: any = ['2CSA', '2CSB', '2CSC'];
-  csScope3rd: any = ['3CSA', '3CSB', '3CSC', '3CSD'];
-  csScope4th: any = ['4CSA', '4CSB', '4CSC'];
+  csScope1st: any = ['1CSA', '1CSB', '1CSC', '1CSD', '1CSE'];
+  csScope2nd: any = ['2CSA', '2CSB', '2CSC', '2CSD', '2CSE'];
+  csScope3rd: any = ['3CSA', '3CSB', '3CSC', '3CSD', '3CSE'];
+  csScope4th: any = ['4CSA', '4CSB', '4CSC', '4CSD', '4CSE'];
   isSection: any = [
     '1ISA',
     '1ISB',
+    '1ISC',
     '2ISA',
     '2ISB',
+    '2ISC',
     '3ISA',
     '3ISB',
+    '3ISC',
     '4ISA',
     '4ISB',
+    '4ISC',
   ];
-  isScope1st: any = ['1ISA', '1ISB'];
-  isScope2nd: any = ['2ISA', '2ISB'];
+  isScope1st: any = ['1ISA', '1ISB', '1ISC'];
+  isScope2nd: any = ['2ISA', '2ISB', '2ISC'];
   isScope3rd: any = ['3ISA', '3ISB', '3ISC'];
   isScope4th: any = ['4ISA', '4ISB', '4ISC'];
   dateToday = new Date();
