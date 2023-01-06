@@ -440,15 +440,18 @@ export class TaskService {
 
   public updateStudentStatus(id: string, newData: any, oldData: any) {
     try {
-      console.log(newData);
-      console.log(oldData);
+      console.log('newData', newData);
+      console.log('oldData', oldData);
+
       return this.afs
         .collection('tasks')
         .doc(id)
         .update({
           recipients: firebase.firestore.FieldValue.arrayRemove(oldData),
         })
-        .then(() => {
+        .then((res) => {
+          console.log(res);
+          console.log('SUCCESFFULLY DELETED');
           this.afs
             .collection('tasks')
             .doc(id)
@@ -466,8 +469,8 @@ export class TaskService {
               const params: URLSearchParams = new URLSearchParams();
 
               // console.log(newData.email);
-              let pushToken = newData?.pushToken;
               let email = newData?.email;
+              let pushToken = newData?.pushToken;
               let uploadedBy = newData?.uploadedBy;
               let title = newData?.title;
               let deadline = newData?.deadline;
@@ -693,6 +696,9 @@ export class TaskService {
                 });
             }
           }
+        })
+        .catch((err) => {
+          console.log(err);
         })
         .catch((err) => {
           console.log(err);

@@ -221,11 +221,11 @@
          <p *ngIf="recipient.status == 'Late'">
           Status: <span class="text-red-400">{{ recipient.status }}</span>
         </p>
-        <p *ngIf="recipient.status == 'Accomplished' && recipient.submittedAtCopy <= recipient.deadline">
+        <p *ngIf="recipient.status == 'Accomplished' && 1 * recipient.submittedAt <= recipient.deadline">
           Status:
           <span class="recipient-accomplished">{{ recipient.status }}</span>
         </p>
-        <p *ngIf="recipient.status == 'Accomplished' && recipient.submittedAtCopy >= recipient.deadline">
+        <p *ngIf="recipient.status == 'Accomplished' && 1 * recipient.submittedAt >= recipient.deadline">
           Status:
           <span class="text-[#F25A1D]">Accomplished Late</span>
         </p>

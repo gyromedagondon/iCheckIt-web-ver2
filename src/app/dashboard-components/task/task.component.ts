@@ -113,11 +113,12 @@ export class TaskComponent implements OnInit {
           if (user?.firstName && user?.lastName) {
             return {
               ...user,
-              displayName: user?.firstName + ' ' + user?.lastName,
-              submittedAtCopy: new Date(parseInt(user?.submittedAt)).getTime(),
+              displayName: user?.firstName + ' ' + user?.lastName
+              //submittedAtCopy: new Date(parseInt(user?.submittedAt)).getTime(),
             };
           } else {
-            return { ...user, submittedAtCopy: new Date(parseInt(user?.submittedAt)).getTime() };
+           //return { ...user, submittedAtCopy: new Date(parseInt(user?.submittedAt)).getTime() };
+            return { ...user };
           }
         });
         this.taskData = res;
@@ -418,6 +419,7 @@ export class TaskComponent implements OnInit {
 
     oldData.forEach((element: any) => {
       let updatedData = {
+        ...element,
         createdAt: new Date(element?.createdAt).getTime(),
         startsAt: new Date(element?.startsAt).getTime(),
         deadline: new Date(element?.deadline).getTime(),
@@ -426,7 +428,7 @@ export class TaskComponent implements OnInit {
         description: element?.description,
         displayName: element?.displayName,
         email: element?.email,
-        pushToken: element?.pushToken,
+        pushToken: element?.pushToken ? element?.pushToken : '',
         isAccepted: true,
         section: element?.section,
         status: 'Accomplished',
@@ -477,19 +479,21 @@ export class TaskComponent implements OnInit {
 
     oldData.forEach((element: any) => {
       let updatedData = {
+        ...element,
         createdAt: new Date(element?.createdAt).getTime(),
         startsAt: new Date(element?.startsAt).getTime(),
         deadline: new Date(element?.deadline).getTime(),
+
         description: element?.description,
         displayName: element?.displayName,
         email: element?.email,
         firstName: element?.firstName,
         lastName: element?.lastName,
-        pushToken: element.pushToken,
+        pushToken: element?.pushToken ? element?.pushToken : '',
         isAccepted: false,
         section: element?.section,
         status: 'Pending',
-        submissionLink: element?.submissionLink,
+        submissionLink: '',
         taskId: element?.taskId,
         title: element?.title,
         uid: element?.uid,
@@ -524,7 +528,12 @@ export class TaskComponent implements OnInit {
   }
 
   public acceptSubmission(recipient: any) {
+    
+    console.log('recipient', recipient);
     let accomplishedData = {
+      ...recipient,
+      acceptedAt: new Date().getTime(),
+      acceptedBy: this.fsData?.firstName + ' ' + this.fsData?.lastName,
       createdAt: new Date(recipient?.createdAt).getTime(),
       startsAt: new Date(recipient?.startsAt).getTime(),
       deadline: new Date(recipient?.deadline).getTime(),
@@ -534,7 +543,7 @@ export class TaskComponent implements OnInit {
       firstName: recipient?.firstName ? recipient?.firstName : '',
       email: recipient?.email,
       section: recipient?.section,
-      pushToken: recipient?.pushToken,
+      pushToken: recipient?.pushToken ? recipient?.pushToken : '',
       isAccepted: true,
       status: 'Accomplished',
       submissionLink: recipient?.submissionLink,
@@ -548,8 +557,9 @@ export class TaskComponent implements OnInit {
       attemptsLeft: recipient?.attemptsLeft,
       deadlineLimit: recipient?.deadlineLimit,
     };
+    
 
-    this.taskService.updateStudentStatus(
+   this.taskService.updateStudentStatus(
       this.taskData.taskId,
       accomplishedData,
       recipient
@@ -559,7 +569,9 @@ export class TaskComponent implements OnInit {
     this.deleteTaskModal = !this.deleteTaskModal;
   }
   public rejectSubmission(recipient: any) {
+ 
     let accomplishedData = {
+      ...recipient,
       createdAt: new Date(recipient?.createdAt).getTime(),
       startsAt: new Date(recipient?.startsAt).getTime(),
       deadline: new Date(recipient?.deadline).getTime(),
@@ -569,7 +581,7 @@ export class TaskComponent implements OnInit {
       displayName: recipient?.displayName,
       email: recipient?.email,
       section: recipient?.section,
-      pushToken: recipient?.pushToken,
+      pushToken: recipient?.pushToken ? recipient?.pushToken : '',
       isAccepted: false,
       status: 'Pending',
       submissionLink: '',
